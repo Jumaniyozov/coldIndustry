@@ -60,7 +60,7 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        fontSize: '1.25rem',
+        fontSize: '1.5rem',
         fontStyle: 'italic',
         color: '#FFF',
         fontWeight: '300',
