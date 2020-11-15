@@ -15,10 +15,10 @@ const useStyles = makeStyles({
     }
 })
 
-const ButtonCstm = ({width = '200px', height = '50px', children}) => {
+const ButtonCstm = ({width = '200px', height = '50px', children}, props) => {
     const classes = useStyles({width, height})
     return (
-        <button className={classes.root}>
+        <button className={classes.root} {...props}>
             {children}
         </button>
     );

@@ -3,6 +3,7 @@ import ButtonCstm from "./Button.component";
 import SandwichImg from "../assets/Group 29.png";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import {Link} from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -34,12 +35,16 @@ const useStyles = makeStyles({
     }
 });
 
-const HomeShowCard = ({header = 'Header',
+const HomeShowCard = ({
+                          header = 'Header',
                           text = 'text',
                           btnText = 'button',
                           leftSideText = false,
-                          imageUrl= SandwichImg,
-                      imageHeight='600px', imageWidth='600px'}) => {
+                          imageUrl = SandwichImg,
+                          imageHeight = '600px',
+                          imageWidth = '600px',
+                          linkTo,
+                      }) => {
     const classes = useStyles();
 
     return (
@@ -50,16 +55,20 @@ const HomeShowCard = ({header = 'Header',
                         ? (<>
                             <Box width="50%" pt={"2rem"} display='flex' alignItems='center' justifyContent='center'>
                                 <Box pt={3}>
-                                    <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl} alt={`${header}`}/>
+                                    <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
+                                         alt={`${header}`}/>
                                 </Box>
                             </Box>
                             <Box className={classes.boxLeft}>
                                 <Box pr={5}>
                                     <h1>{header}</h1>
                                     <p>{text}</p>
-                                    <ButtonCstm width={'15rem'} height={'3rem'}>
-                                        {btnText}
-                                    </ButtonCstm>
+                                    {linkTo && <Link to={`${linkTo}`}>
+                                        <ButtonCstm width={'15rem'} height={'3rem'}>
+                                            {btnText}
+                                        </ButtonCstm>
+                                    </Link>
+                                    }
                                 </Box>
                             </Box>
                         </>)
@@ -68,14 +77,18 @@ const HomeShowCard = ({header = 'Header',
                                 <Box pr={5}>
                                     <h1>{header}</h1>
                                     <p>{text}</p>
-                                    <ButtonCstm width={'15rem'} height={'3rem'}>
-                                        {btnText}
-                                    </ButtonCstm>
+                                    {linkTo && <Link to={`${linkTo}`}>
+                                        <ButtonCstm width={'15rem'} height={'3rem'}>
+                                            {btnText}
+                                        </ButtonCstm>
+                                    </Link>
+                                    }
                                 </Box>
                             </Box>
                             <Box width="50%" pt={"2rem"} display='flex' alignItems='center' justifyContent='center'>
                                 <Box pt={3}>
-                                    <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl} alt={`${header}`}/>
+                                    <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
+                                         alt={`${header}`}/>
                                 </Box>
                             </Box>
                         </>)

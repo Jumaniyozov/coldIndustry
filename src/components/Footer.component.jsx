@@ -48,6 +48,41 @@ const useStyles = makeStyles({
             color: 'white !important'
         }
     },
+    textfield: {
+        '& .MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl': {
+            '&:before': {
+                borderBottomColor: '#FFF !important',
+                color: 'grey'
+            }
+        },
+        '& .MuiFormLabel-root, .MuiInputLabel-root, .MuiInputLabel-formControl, .MuiInputLabel-animated': {
+            color: '#FFF'
+        },
+        '& label.Mui-focused': {
+            color: '#FFF',
+        },
+        '& .MuiInput-underline': {
+            color: '#FFF',
+            borderBottomColor: '#FFF',
+        },
+        '& .MuiInput-underline:after': {
+            color: '#FFF',
+            borderBottomColor: '#FFF',
+        },
+
+        '& .MuiOutlinedInput-root': {
+            color: '#FFF',
+            '& fieldset': {
+                borderColor: '#FFF',
+            },
+            '&:hover fieldset': {
+                borderColor: '#FFF',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: '#FFF',
+            },
+        }
+    },
     footerTime: {},
     times: {
         color: "#FFF",
@@ -73,13 +108,15 @@ const useStyles = makeStyles({
         '& h3': {
             color: "#000",
             padding: 0,
-            margin:0,
+            margin: 0,
 
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
         }
-    }, feedback__guard: {}
+    }, feedback__guard: {
+        paddingBottom: '5rem'
+    }
 });
 
 
@@ -143,18 +180,21 @@ const Footer = () => {
                             <Box width="100%" display="flex">
                                 <Box width="50%">
                                     <h2>Ваше Имя</h2>
-                                    <TextField id="name" name='name' label="Имя" value={inputValues.name}
+                                    <TextField className={classes.textfield} id="name" name='name' label="Имя"
+                                               value={inputValues.name}
                                                onChange={inputHandler}/>
                                 </Box>
                                 <Box width="50%">
                                     <h2>Номер телефона</h2>
-                                    <TextField id="phone" name='phone' label="Номер телфона" value={inputValues.phone}
+                                    <TextField className={classes.textfield}
+                                               id="phone" name='phone'
+                                               label="Номер телфона" value={inputValues.phone}
                                                onChange={inputHandler}/>
                                 </Box>
                             </Box>
                         </form>
                     </Box>
-                    <Box widtht="100%" display="flex" pl={'3rem'}>
+                    <Box widtht="100%" display="flex" pl={'3rem'} pb={'1rem'}>
                         <Box width="50%">
                             <Box className={classes.footerTime}>
                                 <h2>Удобное время</h2>
@@ -181,7 +221,7 @@ const Footer = () => {
                                         <h3>Обратный звонок</h3>
                                     </Box>
                                 </Box>
-                                <Box width='50%' className={classes.feedback__guard} display='flex' pl={'2rem'}
+                                <Box width='50%' display='flex' pl={'2rem'}
                                      alignItems='center'>
                                     <Box>
                                         <img src={GuardIcon} alt="Guard Icon"/>
@@ -191,7 +231,6 @@ const Footer = () => {
                                             переданы третьим лицам</p>
                                     </Box>
                                 </Box>
-
                             </Box>
                         </Box>
                     </Box>

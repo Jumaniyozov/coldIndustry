@@ -63,7 +63,7 @@ const useStyles = makeStyles({
 });
 
 
-const HomePage = () => {
+const HomePage = ({history}) => {
     const classes = useStyles();
 
     return (
@@ -107,7 +107,8 @@ const HomePage = () => {
                         header={CardInfo.h1.header}
                         text={CardInfo.h1.text}
                         btnText={CardInfo.h1.btnText}
-                        imageHeight='450px'
+                        linkTo={`/sandwichpanels`}
+                        imageHeight='400px'
                         imageWidth='600px'
                     />
 
@@ -123,6 +124,7 @@ const HomePage = () => {
                         imageHeight='500px'
                         imageWidth='500px'
                         imageUrl={MotorImage}
+                        linkTo={`/coolingengines`}
                     />
 
                     <Box pt={'5rem'}>
@@ -136,6 +138,7 @@ const HomePage = () => {
                         imageUrl={CarImage}
                         imageHeight='450px'
                         imageWidth='600px'
+                        linkTo={`/coolingframes`}
                     />
 
                     <Box pt={'5rem'}>
@@ -150,6 +153,7 @@ const HomePage = () => {
                         imageUrl={DoorImage}
                         imageHeight='550px'
                         imageWidth='600px'
+                        linkTo={`/doors`}
                     />
 
                     <Box pt={'5rem'}>
@@ -161,8 +165,9 @@ const HomePage = () => {
                         text={CardInfo.h5.text}
                         btnText={CardInfo.h5.btnText}
                         imageUrl={PenoplastImage}
-                        imageHeight='500px'
+                        imageHeight='400px'
                         imageWidth='500px'
+                        linkTo={`/penoplasts`}
                     />
 
                 </Box>
