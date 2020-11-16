@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from "../components/Header.component";
-import Footer from "../components/Footer.component";
 import HomeShowCard from "../components/HomeShowCat.component";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -296,9 +294,7 @@ const SandwichRenderer = () => {
 const SandwichPanelPage = () => {
     return (
         <div>
-            <Header/>
             <SandwichRenderer/>
-            <Footer/>
         </div>
     );
 };

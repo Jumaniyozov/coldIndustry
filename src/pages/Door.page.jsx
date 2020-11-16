@@ -337,9 +337,7 @@ const DoorPage = () => {
 const DoorPageRendered = () => {
     return (
         <div>
-            <Header/>
             <DoorPage/>
-            <Footer/>
         </div>
     );
 };

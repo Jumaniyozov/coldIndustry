@@ -5,8 +5,6 @@ import Footer from "../components/Footer.component";
 const CoolingEnginePage = () => {
     return (
         <div>
-            <Header/>
-            <Footer/>
         </div>
     );
 };

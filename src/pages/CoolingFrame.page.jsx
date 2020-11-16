@@ -358,9 +358,7 @@ const FrameRenderer = () => {
 const CoolingFramePage = () => {
     return (
         <div>
-            <Header/>
             <FrameRenderer/>
-            <Footer/>
         </div>
     );
 };

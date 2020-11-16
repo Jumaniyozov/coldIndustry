@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from "../components/Header.component";
-import Footer from "../components/Footer.component";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import {PenoplastInfo} from "../data/InfoText.json";
@@ -139,9 +137,7 @@ const PenoplastPage = () => {
 const PenoplastPageRenderer = () => {
     return (
         <div>
-            <Header/>
             <PenoplastPage/>
-            <Footer/>
         </div>
     );
 };

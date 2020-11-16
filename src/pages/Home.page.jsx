@@ -199,9 +199,7 @@ const HomePage = ({history}) => {
 const ComposedHomePage = () => {
     return (
         <div>
-            <Header/>
             <HomePage/>
-            <Footer/>
         </div>
     )
 }
