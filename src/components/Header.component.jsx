@@ -19,9 +19,10 @@ import SiteLogo from "../assets/SiteLogoText.svg";
 const useStyles = makeStyles({
     list: {
         width: 250,
+
     },
     icons: {
-      color: 'white'
+        color: 'white'
     },
     listItem: {
         // color: 'green',
@@ -33,13 +34,15 @@ const useStyles = makeStyles({
         width: 'auto',
     },
     sideList: {
-        color: 'white'
+        color: 'white',
     },
     header: {
         width: "100%",
-        height: "10vh",
+        height: "4rem",
         position: "fixed",
-        zIndex: 999
+        zIndex: 999,
+
+
     }
 });
 
@@ -69,7 +72,8 @@ export default function Header() {
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem className={classes.listItem} button key={text}>
-                        <ListItemIcon className={classes.icons}>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+                        <ListItemIcon className={classes.icons}>{index % 2 === 0 ? <InboxIcon/> :
+                            <MailIcon/>}</ListItemIcon>
                         <ListItemText primary={text}/>
                     </ListItem>
                 ))}
@@ -78,7 +82,8 @@ export default function Header() {
             <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem className={classes.listItem} button key={text}>
-                        <ListItemIcon className={classes.icons}>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+                        <ListItemIcon className={classes.icons}>{index % 2 === 0 ? <InboxIcon/> :
+                            <MailIcon/>}</ListItemIcon>
                         <ListItemText primary={text}/>
                     </ListItem>
                 ))}
@@ -108,9 +113,9 @@ export default function Header() {
                                 alt="hamburger Menu"
                             />
                         </Button>
-                        <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                        <Drawer className={classes.mainList} anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
                             <Box height='100%' bgcolor="#1F1F23" className={classes.sideList}>
-                            {list(anchor)}
+                                {list(anchor)}
                             </Box>
                         </Drawer>
                     </React.Fragment>

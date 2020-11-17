@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from "../components/Header.component";
-import Footer from "../components/Footer.component";
 import HomeShowCard from "../components/HomeShowCat.component";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -24,7 +22,6 @@ import CoolingFramesSG3 from "../assets/CoolingFrame/CoolingFramesSG3.png";
 import CoolingFramesSG4 from "../assets/CoolingFrame/CoolingFramesSG4.png";
 import CoolingFramesSG5 from "../assets/CoolingFrame/CoolingFramesSG5.png";
 import CoolingFramesSG6 from "../assets/CoolingFrame/CoolingFramesSG6.png";
-
 
 import {CoolingFrameInfo} from "../data/InfoText.json";
 
@@ -131,7 +128,7 @@ const useStyles = makeStyles({
             '-webkitBackgroundClip': 'text',
             backgroundClip: 'text',
             color: 'transparent',
-            background: 'linear-gradient(to right, #D38716 , #D6B600)',
+            background: 'linear-gradient(to right, #D38716 0%, #D6B600 100%)',
         },
 
     },

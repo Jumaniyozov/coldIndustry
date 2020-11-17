@@ -7,7 +7,7 @@ import GuardIcon from "../assets/guardSymbol.svg";
 
 const useStyles = makeStyles({
     root: {
-        paddingTop: "10rem",
+        paddingTop: "5rem",
 
         "& h1": {
             color: "white",

@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from "../components/Header.component";
-import Footer from "../components/Footer.component";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";

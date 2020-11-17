@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from "../components/Header.component";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import HeroLogo from "../assets/HeroLogo.svg";
@@ -7,7 +6,6 @@ import InfoText from "../components/InfoText.component";
 import {textForInfo} from "../data/InfoText.json";
 import {CardInfo} from "../data/InfoText.json";
 import HomeShowCard from "../components/HomeShowCat.component";
-import Footer from "../components/Footer.component";
 
 //Images
 import MotorImage from '../assets/motorH.png';

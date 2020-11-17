@@ -329,3 +329,30 @@ export const AboutInfo = {
     }
 
 }
+
+export const CoolingEngineInfo = {
+    mainSection: {
+        header: `Холодильное оборудование`,
+        text: `Наша компания под брэндом “Ayoz” производит изотермические и холодильные кузова для автомобилей отечественных и импортных производителей.`,
+    },
+    section1: {
+      header: `Поршневые компрессоры`,
+    },
+
+    section2: {
+        header: `Винтовые компрессоры`,
+    },
+
+    section3: {
+        header: `Компрессорно-Конденсаторные 
+агрегаты`,
+    },
+
+    section4: {
+        header: `Теплообменники и сосуды, работающие под давлением`,
+    },
+
+    section5: {
+        header: `AMMONIA COMPRESSOR PACKS`,
+    },
+}
