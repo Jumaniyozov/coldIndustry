@@ -82,8 +82,8 @@ const CoolingEnginePage = () => {
                         </Box>
                     </Grid>
                 </Box>
-                <Box ml={'3rem'} mr={'3rem'}>
-                    <SliderComponent/>
+                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                    <SliderComponent perSlideView={1}/>
                 </Box>
                 <Box display='flex'>
                     <Grid lg={6}>
@@ -97,8 +97,8 @@ const CoolingEnginePage = () => {
                         </Box>
                     </Grid>
                 </Box>
-                <Box ml={'3rem'} mr={'3rem'}>
-                    <SliderComponent/>
+                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                    <SliderComponent perSlideView={4}/>
                 </Box>
                 <Box display='flex'>
                     <Grid lg={6}>
@@ -112,8 +112,8 @@ const CoolingEnginePage = () => {
                         </Box>
                     </Grid>
                 </Box>
-                <Box ml={'3rem'} mr={'3rem'}>
-                    <SliderComponent/>
+                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                    <SliderComponent perSlideView={4}/>
                 </Box>
                 <Box display='flex'>
                     <Grid lg={6}>
@@ -127,8 +127,8 @@ const CoolingEnginePage = () => {
                         </Box>
                     </Grid>
                 </Box>
-                <Box ml={'3rem'} mr={'3rem'}>
-                    <SliderComponent/>
+                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                    <SliderComponent perSlideView={3}/>
                 </Box>
                 <Box display='flex'>
                     <Grid lg={6}>
@@ -142,8 +142,8 @@ const CoolingEnginePage = () => {
                         </Box>
                     </Grid>
                 </Box>
-                <Box ml={'3rem'} mr={'3rem'}>
-                    <SliderComponent/>
+                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                    <SliderComponent perSlideView={2}/>
                 </Box>
                 <Box width='80%' pl={'5.5rem'} pt={'5rem'}>
                     <Box display='flex' justifyContent='space-between' className={classes.subHeader}>

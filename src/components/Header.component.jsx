@@ -26,6 +26,11 @@ const useStyles = makeStyles({
     },
     listItem: {
         // color: 'green',
+        '& a': {
+            width: '100%',
+            color: '#FFF',
+            textDecoration: 'none'
+        },
         '&:hover': {
             backgroundImage: 'linear-gradient(to right, #D38716 , #D6B600)'
         }
@@ -70,24 +75,53 @@ export default function Header() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem className={classes.listItem} button key={text}>
-                        <ListItemIcon className={classes.icons}>{index % 2 === 0 ? <InboxIcon/> :
-                            <MailIcon/>}</ListItemIcon>
-                        <ListItemText primary={text}/>
-                    </ListItem>
-                ))}
+                {/*{['', '', '', '', '', ''].map((text, index) => (*/}
+                {/*    <ListItem className={classes.listItem} button key={text}>*/}
+                {/*        <ListItemText primary={text}/>*/}
+                {/*    </ListItem>*/}
+                {/*))}*/}
+                <ListItem className={classes.listItem} button key={'О Нас'}>
+                    <Link to={`/about`}>
+                        <ListItemText primary={'О Нас'}/>
+                        {/*<button>О Нас</button>*/}
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.listItem} button key={'Сендвич Панели'}>
+                    <Link to={`/sandwichpanels`}>
+                        <ListItemText primary={'Сендвич Панели'}/>
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.listItem} button key={'Холодильные Кузова'}>
+                    <Link to={`/coolingframes`}>
+                        <ListItemText primary={'Холодильные Кузова'}/>
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.listItem} button key={'Холодильное Оборудование'}>
+                    <Link to={`/coolingengines`}>
+                        <ListItemText primary={'Холодильное Оборудование'}/>
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.listItem} button key={`Двери 'Mano'`}>
+                    <Link to={`/doors`}>
+                        <ListItemText primary={`Двери 'Mano'`}/>
+                    </Link>
+                </ListItem>
+                <ListItem className={classes.listItem} button key={'Пенополистирол'}>
+                    <Link to={`/penoplasts`}>
+                        <ListItemText primary={'Пенополистирол'}/>
+                    </Link>
+                </ListItem>
             </List>
             <Divider/>
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem className={classes.listItem} button key={text}>
-                        <ListItemIcon className={classes.icons}>{index % 2 === 0 ? <InboxIcon/> :
-                            <MailIcon/>}</ListItemIcon>
-                        <ListItemText primary={text}/>
-                    </ListItem>
-                ))}
-            </List>
+            {/*<List>*/}
+            {/*    {['All mail', 'Trash', 'Spam'].map((text, index) => (*/}
+            {/*        <ListItem className={classes.listItem} button key={text}>*/}
+            {/*            <ListItemIcon className={classes.icons}>{index % 2 === 0 ? <InboxIcon/> :*/}
+            {/*                <MailIcon/>}</ListItemIcon>*/}
+            {/*            <ListItemText primary={text}/>*/}
+            {/*        </ListItem>*/}
+            {/*    ))}*/}
+            {/*</List>*/}
         </div>
     );
 
@@ -113,7 +147,8 @@ export default function Header() {
                                 alt="hamburger Menu"
                             />
                         </Button>
-                        <Drawer className={classes.mainList} anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                        <Drawer className={classes.mainList} anchor={anchor} open={state[anchor]}
+                                onClose={toggleDrawer(anchor, false)}>
                             <Box height='100%' bgcolor="#1F1F23" className={classes.sideList}>
                                 {list(anchor)}
                             </Box>

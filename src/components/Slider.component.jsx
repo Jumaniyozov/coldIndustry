@@ -10,12 +10,16 @@ import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import Box from "@material-ui/core/Box";
 import React from "react";
+import SliderCardMain from "./SliderCardMain.component";
+import SliderCard from "./SliderCard.component";
 
 // install Swiper components
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const useStyles = makeStyles({
     swiperMain: {
+        backgroundColor: '#FFF',
+
         '& .swiper-pagination-bullets, & .swiper-scrollbar': {
             display: 'none'
         },
@@ -27,19 +31,19 @@ const useStyles = makeStyles({
         },
 
         '& .swiper-wrapper': {
-            marginLeft: '5rem',
-            marginRight: '5rem',
+            paddingRight: '5rem',
+            // marginRight: '5rem',
         }
     }
 })
 
-const SliderComponent = () => {
+const SliderComponent = ({perSlideView = 3}) => {
     const classes = useStyles();
     return (
         <Swiper
             className={classes.swiperMain}
             spaceBetween={50}
-            slidesPerView={3}
+            slidesPerView={perSlideView}
             navigation
             loop={true}
             pagination={{clickable: true}}
@@ -47,9 +51,22 @@ const SliderComponent = () => {
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
         >
-                <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
+            {
+                perSlideView === 1
+                    ? (
+                        <SwiperSlide><SliderCardMain/></SwiperSlide>
+                    ) : (
+                        <>
+                            <SwiperSlide><SliderCard /></SwiperSlide>
+                            <SwiperSlide><SliderCard /></SwiperSlide>
+                            <SwiperSlide><SliderCard /></SwiperSlide>
+                            <SwiperSlide><SliderCard /></SwiperSlide>
+                        </>
+                    )
+            }
+            {/*<SwiperSlide><SliderCardMain/></SwiperSlide>*/}
+            {/*<SwiperSlide>Slide 3</SwiperSlide>*/}
+            {/*<SwiperSlide>Slide 2</SwiperSlide>*/}
         </Swiper>
     );
 };
