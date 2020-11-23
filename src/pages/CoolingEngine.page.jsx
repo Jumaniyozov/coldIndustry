@@ -1,20 +1,10 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import HomeShowCard from "../components/HomeShowCat.component";
-import {CoolingEngineInfo} from "../data/InfoText.json";
-import HeroImageS1 from "../assets/CoolingEngine/HeroImageS1.png";
-import SubImage1 from "../assets/CoolingEngine/1.png";
-import SubImage3 from "../assets/CoolingEngine/3.png";
-import SubImage8 from "../assets/CoolingEngine/8.png";
-import SubImage13 from "../assets/CoolingEngine/13.png";
-import SubImage17 from "../assets/CoolingEngine/17.png";
-import CoolingDoor1 from "../assets/CoolingEngine/CoolingDoor1.png";
-import CoolingDoor2 from "../assets/CoolingEngine/CoolingDoor2.png";
-import CoolingDoor3 from "../assets/CoolingEngine/CoolingDoor3.png";
-import CoolingDoor4 from "../assets/CoolingEngine/CoolingDoor4.png";
 import Grid from "@material-ui/core/Grid";
 import SliderComponent from "../components/Slider.component";
+import {GlobalContext} from "../context/Main.context";
 
 
 const useStyles = makeStyles({
@@ -53,121 +43,147 @@ const useStyles = makeStyles({
 
 const CoolingEnginePage = () => {
     const classes = useStyles();
+    const {coolingEnginePageInfo, fetchCEPage} = useContext(GlobalContext);
+
+    useEffect(() => {
+        fetchCEPage();
+    }, [coolingEnginePageInfo])
 
     return (
         <>
-            <Box bgcolor="#1F1F23">
-                <Box pt={'5rem'} pl={'3rem'}>
-                    <HomeShowCard
-                        header={CoolingEngineInfo.mainSection.header}
-                        text={CoolingEngineInfo.mainSection.text}
-                        imageUrl={HeroImageS1}
-                        imageHeight='30rem'
-                        imageWidth='38rem'
-                        leftSideText
-                    />
-                </Box>
-                <Box width='50%' pl={'25%'} pt={'3rem'} bgcolor="#1F1F23">
-                    <hr className={classes.hr}/>
-                </Box>
-                <Box display='flex'>
-                    <Grid lg={6}>
-                        <Box height='100%' pl={'5rem'} className={classes.headers} display='flex' alignItems='center' justifyContent='flex-start'>
-                            <h1>{CoolingEngineInfo.section1.header}</h1>
+            {coolingEnginePageInfo.length < 1
+                ? <h1>Loading...</h1>
+                : (
+                    <Box bgcolor="#1F1F23">
+                        <Box pt={'5rem'} pl={'3rem'}>
+                            <HomeShowCard
+                                header={coolingEnginePageInfo.mainSection.header}
+                                text={coolingEnginePageInfo.mainSection.text}
+                                imageUrl={coolingEnginePageInfo.mainSection.imageUrl}
+                                imageHeight='30rem'
+                                imageWidth='38rem'
+                                leftSideText
+                            />
                         </Box>
-                    </Grid>
-                    <Grid lg={6} className={classes.textlist}>
-                        <Box display='flex' alignItems='center' justifyContent='flex-start'>
-                            <img style={{height: '300px', width:'520px'}} src={SubImage1} alt=""/>
+                        <Box width='50%' pl={'25%'} pt={'3rem'} bgcolor="#1F1F23">
+                            <hr className={classes.hr}/>
                         </Box>
-                    </Grid>
-                </Box>
-                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
-                    <SliderComponent perSlideView={1}/>
-                </Box>
-                <Box display='flex'>
-                    <Grid lg={6}>
-                        <Box height='100%' pl={'5rem'} className={classes.headers} display='flex' alignItems='center' justifyContent='flex-start'>
-                            <h1>{CoolingEngineInfo.section2.header}</h1>
+                        <Box display='flex'>
+                            <Grid container>
+                                <Grid item lg={6}>
+                                    <Box height='100%' pl={'5rem'} className={classes.headers} display='flex'
+                                         alignItems='center' justifyContent='flex-start'>
+                                        <h1>{coolingEnginePageInfo.section1.header}</h1>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={6} className={classes.textlist}>
+                                    <Box display='flex' alignItems='center' justifyContent='flex-start'>
+                                        <img style={{height: '300px', width: '520px'}}
+                                             src={coolingEnginePageInfo.section1.imageUrl} alt=""/>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
-                    </Grid>
-                    <Grid lg={6} className={classes.textlist}>
-                        <Box display='flex' alignItems='center' justifyContent='flex-start'>
-                            <img style={{height: '250px', width:'440px'}} src={SubImage3} alt=""/>
+                        <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                            <SliderComponent data={coolingEnginePageInfo.section1.content} soloComponent={true}
+                                             perSlideView={1}/>
                         </Box>
-                    </Grid>
-                </Box>
-                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
-                    <SliderComponent perSlideView={4}/>
-                </Box>
-                <Box display='flex'>
-                    <Grid lg={6}>
-                        <Box height='100%' pl={'5rem'} className={classes.headers} display='flex' alignItems='center' justifyContent='flex-start'>
-                            <h1>{CoolingEngineInfo.section3.header}</h1>
+                        <Box display='flex'>
+                            <Grid container>
+
+                                <Grid item lg={6}>
+                                    <Box height='100%' pl={'5rem'} className={classes.headers} display='flex'
+                                         alignItems='center' justifyContent='flex-start'>
+                                        <h1>{coolingEnginePageInfo.section2.header}</h1>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={6} className={classes.textlist}>
+                                    <Box display='flex' alignItems='center' justifyContent='flex-start'>
+                                        <img style={{height: '250px', width: '440px'}}
+                                             src={coolingEnginePageInfo.section2.imageUrl} alt=""/>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
-                    </Grid>
-                    <Grid lg={6} className={classes.textlist}>
-                        <Box display='flex' alignItems='center' justifyContent='flex-start'>
-                            <img style={{height: '300px', width:'520px'}} src={SubImage8} alt=""/>
+                        <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                            <SliderComponent data={coolingEnginePageInfo.section2.content} perSlideView={4}/>
                         </Box>
-                    </Grid>
-                </Box>
-                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
-                    <SliderComponent perSlideView={4}/>
-                </Box>
-                <Box display='flex'>
-                    <Grid lg={6}>
-                        <Box height='100%' pl={'5rem'} className={classes.headers} display='flex' alignItems='center' justifyContent='flex-start'>
-                            <h1>{CoolingEngineInfo.section4.header}</h1>
+                        <Box display='flex'>
+                            <Grid container>
+                                <Grid item lg={6}>
+                                    <Box height='100%' pl={'5rem'} className={classes.headers} display='flex'
+                                         alignItems='center' justifyContent='flex-start'>
+                                        <h1>{coolingEnginePageInfo.section3.header}</h1>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={6} className={classes.textlist}>
+                                    <Box display='flex' alignItems='center' justifyContent='flex-start'>
+                                        <img style={{height: '300px', width: '520px'}}
+                                             src={coolingEnginePageInfo.section3.imageUrl} alt=""/>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
-                    </Grid>
-                    <Grid lg={6} className={classes.textlist}>
-                        <Box display='flex' alignItems='center' justifyContent='flex-start'>
-                            <img style={{height: '250px', width:'440px'}} src={SubImage13} alt=""/>
+                        <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                            <SliderComponent data={coolingEnginePageInfo.section3.content} perSlideView={4}/>
                         </Box>
-                    </Grid>
-                </Box>
-                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
-                    <SliderComponent perSlideView={3}/>
-                </Box>
-                <Box display='flex'>
-                    <Grid lg={6}>
-                        <Box height='100%' pl={'5rem'} className={classes.headers} display='flex' alignItems='center' justifyContent='flex-start'>
-                            <h1>{CoolingEngineInfo.section5.header}</h1>
+                        <Box display='flex'>
+                            <Grid container>
+                                <Grid item lg={6}>
+                                    <Box height='100%' pl={'5rem'} className={classes.headers} display='flex'
+                                         alignItems='center' justifyContent='flex-start'>
+                                        <h1>{coolingEnginePageInfo.section4.header}</h1>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={6} className={classes.textlist}>
+                                    <Box display='flex' alignItems='center' justifyContent='flex-start'>
+                                        <img style={{height: '250px', width: '440px'}}
+                                             src={coolingEnginePageInfo.section4.imageUrl} alt=""/>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Box>
-                    </Grid>
-                    <Grid lg={6} className={classes.textlist}>
-                        <Box display='flex' alignItems='center' justifyContent='flex-start'>
-                            <img style={{height: '300px', width:'520px'}} src={SubImage17} alt=""/>
+                        <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                            <SliderComponent data={coolingEnginePageInfo.section4.content} perSlideView={3}/>
                         </Box>
-                    </Grid>
-                </Box>
-                <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
-                    <SliderComponent perSlideView={2}/>
-                </Box>
-                <Box width='80%' pl={'5.5rem'} pt={'5rem'}>
-                    <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
-                        <h1>Холодильные двери</h1>
+                        <Box display='flex'>
+                            <Grid container>
+                                <Grid item lg={6}>
+                                    <Box height='100%' pl={'5rem'} className={classes.headers} display='flex'
+                                         alignItems='center' justifyContent='flex-start'>
+                                        <h1>{coolingEnginePageInfo.section5.header}</h1>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={6} className={classes.textlist}>
+                                    <Box display='flex' alignItems='center' justifyContent='flex-start'>
+                                        <img style={{height: '300px', width: '520px'}} src={coolingEnginePageInfo.section5.imageUrl} alt=""/>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <Box pl={'3rem'} pr={'3rem'} bgcolor='#FFF'>
+                            <SliderComponent data={coolingEnginePageInfo.section5.content} perSlideView={1}/>
+                        </Box>
+                        <Box width='80%' pl={'5.5rem'} pt={'5rem'}>
+                            <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
+                                <h1>{coolingEnginePageInfo.refDoors.header}</h1>
+                            </Box>
+                            <Box width='25%'>
+                                <hr className={classes.hr}/>
+                            </Box>
+                        </Box>
+                        <Box width='100%' mt='3rem'>
+                            <Box
+                                className={classes.galleryContainer}
+                            >
+                                {
+                                    coolingEnginePageInfo.refDoors.content.map(el => <img src={el.imageUrl} alt=""/>)
+                                }
+                            </Box>
+                        </Box>
                     </Box>
-                    <Box width='25%'>
-                        <hr className={classes.hr}/>
-                    </Box>
-                </Box>
-                <Box width='100%' mt='3rem'>
-                    <Box
-                        className={classes.galleryContainer}
-                    >
-                        <img src={CoolingDoor1}
-                             alt="Cooling door 1"/>
-                        <img src={CoolingDoor2}
-                             alt="Cooling door 2"/>
-                        <img src={CoolingDoor3}
-                             alt="Cooling door 3"/>
-                        <img src={CoolingDoor4}
-                             alt="Cooling door 4"/>
-                    </Box>
-                </Box>
-            </Box>
+                )
+            }
         </>
     );
 };

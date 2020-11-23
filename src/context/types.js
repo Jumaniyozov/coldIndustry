@@ -1,0 +1,10 @@
+export const HOME_PAGE_FETCH = 'HOME_PAGE_FETCH';
+export const DOOR_PAGE_FETCH = 'DOOR_PAGE_FETCH';
+export const SP_PAGE_FETCH = 'SP_PAGE_FETCH';
+export const CE_PAGE_FETCH = 'CE_PAGE_FETCH';
+export const CF_PAGE_FETCH = 'CF_PAGE_FETCH';
+export const PENOPLAST_PAGE_FETCH = 'PENOPLAST_PAGE_FETCH';
+export const ABOUT_PAGE_FETCH = 'ABOUT_PAGE_FETCH';
+export const FETCH_START = 'FETCH_START';
+export const FETCH_SUCCESS = 'FETCH_SUCCESS';
+export const FETCH_FAIL = 'FETCH_FAIL';

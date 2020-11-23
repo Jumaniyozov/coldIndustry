@@ -10,23 +10,26 @@ import PenoplastPage from "./pages/Penoplast.page";
 import AboutPage from "./pages/About.page";
 import Header from "./components/Header.component";
 import Footer from "./components/Footer.component";
+import {GlobalProvider} from "./context/Main.context";
 
 
 function App() {
     return (
         <>
             <BrowserRouter>
-                <Header/>
-                <Switch>
-                    <Route exact path='/' component={HomePage}/>
-                    <Route path='/sandwichpanels' component={SandwichPanelPage}/>
-                    <Route path='/coolingengines' component={CoolingEnginePage}/>
-                    <Route path='/coolingframes' component={CoolingFramePage}/>
-                    <Route path='/doors' component={DoorPage}/>
-                    <Route path='/penoplasts' component={PenoplastPage}/>
-                    <Route path='/about' component={AboutPage}/>
-                </Switch>
-                <Footer/>
+                <GlobalProvider>
+                    <Header/>
+                    <Switch>
+                        <Route exact path='/' component={HomePage}/>
+                        <Route path='/sandwichpanels' component={SandwichPanelPage}/>
+                        <Route path='/coolingengines' component={CoolingEnginePage}/>
+                        <Route path='/coolingframes' component={CoolingFramePage}/>
+                        <Route path='/doors' component={DoorPage}/>
+                        <Route path='/penoplasts' component={PenoplastPage}/>
+                        <Route path='/about' component={AboutPage}/>
+                    </Switch>
+                    <Footer/>
+                </GlobalProvider>
             </BrowserRouter>
         </>
     );

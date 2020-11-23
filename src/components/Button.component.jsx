@@ -11,7 +11,10 @@ const useStyles = makeStyles({
         fontWeight: 300,
         fontSize: "15px",
         border: "none",
-        fontFamily: "'Montserrat', sans-serif"
+        fontFamily: "'Montserrat', sans-serif",
+        // ["@media (max-width:650px)"]: {
+        //     width: "7.5rem",
+        // }
     }
 })
 

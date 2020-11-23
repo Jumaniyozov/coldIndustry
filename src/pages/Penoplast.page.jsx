@@ -1,12 +1,9 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import {PenoplastInfo} from "../data/InfoText.json";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-import HeroImage from "../assets/Penoplast/HeroImage.png";
-import SubImage1 from "../assets/Penoplast/SubImage1.png";
-import SubImage2 from "../assets/Penoplast/SubImage2.png";
+import {GlobalContext} from "../context/Main.context";
 
 
 const useStyles = makeStyles({
@@ -70,66 +67,76 @@ const useStyles = makeStyles({
 
 const PenoplastPage = () => {
     const classes = useStyles();
+    const {fetchPenoPage, penoplastPageInfo} = useContext(GlobalContext);
+
+    useEffect(() => {
+        fetchPenoPage();
+    },[penoplastPageInfo])
 
     return (
         <>
-            <Box bgcolor="#1F1F23">
-                <Box className={classes.heroSection} pt={'10rem'}>
-                    <Box display='flex'>
-                        <Grid lg={7}>
-                            <Box pl={'5rem'}>
-                                <img src={HeroImage} style={{height: '500px', width: '700px'}} alt=""/>
-                            </Box>
-                        </Grid>
-                        <Grid lg={5} className={classes.textlist}>
-                            <Box ml={'5rem'} display='flex' alignItems='center' justifyContent='center'>
-                                <Box>
-                                    <h1>{PenoplastInfo.mainH.header}</h1>
-                                    <Box pt={'2rem'}>
-                                        <p>{PenoplastInfo.mainH.text}</p>
-                                    </Box>
+            {
+                penoplastPageInfo.length < 1
+                    ? <h1>Loading...</h1>
+                    : (<>
+                        <Box bgcolor="#1F1F23">
+                            <Box className={classes.heroSection} pt={'10rem'}>
+                                <Box display='flex'>
+                                    <Grid lg={7}>
+                                        <Box pl={'5rem'}>
+                                            <img src={penoplastPageInfo.mainH.imageUrl} style={{height: '500px', width: '700px'}} alt=""/>
+                                        </Box>
+                                    </Grid>
+                                    <Grid lg={5} className={classes.textlist}>
+                                        <Box ml={'5rem'} display='flex' alignItems='center' justifyContent='center'>
+                                            <Box>
+                                                <h1>{penoplastPageInfo.mainH.header}</h1>
+                                                <Box pt={'2rem'}>
+                                                    <p>{penoplastPageInfo.mainH.text}</p>
+                                                </Box>
+                                            </Box>
+                                        </Box>
+                                    </Grid>
                                 </Box>
                             </Box>
-                        </Grid>
-                    </Box>
-                </Box>
-                <Box display='flex' mt={'7rem'}>
-                    <Box width='40%' pl={'30%'}>
-                        <hr className={classes.hr}/>
-                    </Box>
-                </Box>
-                <Box bgcolor="#1F1F23" mt={'3rem'} display='flex'>
-                    <Grid lg={6}>
-                        <Box className={`${classes.textlist} info`} ml={'5.5rem'}>
-                            <h3>{PenoplastInfo.subMenu.header1}</h3>
-                            <Box>
-                                <ul>
-                                    {PenoplastInfo.subMenu.text.map(item => <li>{item}</li>)}
-                                </ul>
+                            <Box display='flex' mt={'7rem'}>
+                                <Box width='40%' pl={'30%'}>
+                                    <hr className={classes.hr}/>
+                                </Box>
+                            </Box>
+                            <Box bgcolor="#1F1F23" mt={'3rem'} display='flex'>
+                                <Grid lg={6}>
+                                    <Box className={`${classes.textlist} info`} ml={'5.5rem'}>
+                                        <h3>{penoplastPageInfo.subMenu.header1}</h3>
+                                        <Box>
+                                            <ul>
+                                                {penoplastPageInfo.subMenu.text.map(item => <li>{item}</li>)}
+                                            </ul>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                                <Grid lg={6}>
+                                    <Box>
+                                        <img src={penoplastPageInfo.subMenu.images[0]} style={{width: '640px', height: '220px'}} alt=""/>
+                                    </Box>
+                                    <Box display='flex' mt={'.5rem'}>
+                                        <Box>
+                                            <img src={penoplastPageInfo.subMenu.images[1]} style={{width: '315px', height: '220px'}} alt=""/>
+                                        </Box>
+                                        <Box pl={'10px'}>
+                                            <img src={penoplastPageInfo.subMenu.images[1]} style={{width: '315px', height: '220px'}} alt=""/>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Box>
+                            <Box className={`${classes.textlist} info`} ml={'5.5rem'}>
+                                <Grid lg={6}>
+                                    <h3>{penoplastPageInfo.subMenu.header2}</h3>
+                                    <h3>{penoplastPageInfo.subMenu.header3}</h3>
+                                </Grid>
                             </Box>
                         </Box>
-                    </Grid>
-                    <Grid lg={6}>
-                        <Box>
-                            <img src={SubImage1} style={{width: '640px', height: '220px'}} alt=""/>
-                        </Box>
-                        <Box display='flex' mt={'.5rem'}>
-                            <Box>
-                                <img src={SubImage2} style={{width: '315px', height: '220px'}} alt=""/>
-                            </Box>
-                            <Box pl={'10px'}>
-                                <img src={SubImage2} style={{width: '315px', height: '220px'}} alt=""/>
-                            </Box>
-                        </Box>
-                    </Grid>
-                </Box>
-                <Box className={`${classes.textlist} info`} ml={'5.5rem'}>
-                    <Grid lg={6}>
-                        <h3>{PenoplastInfo.subMenu.header2}</h3>
-                        <h3>{PenoplastInfo.subMenu.header3}</h3>
-                    </Grid>
-                </Box>
-            </Box>
+                    </>)}
         </>
     )
 }

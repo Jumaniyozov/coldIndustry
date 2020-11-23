@@ -1,7 +1,5 @@
 import React from 'react';
 import {Box} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import {CoolingEngineInfo} from "../data/InfoText.json";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles({
@@ -23,17 +21,17 @@ const useStyles = makeStyles({
     }
 });
 
-const SliderCard = () => {
+const SliderCard = ({text, imageUrl}) => {
     const classes = useStyles();
 
     return (
         <>
             <Box mb='2rem' bgcolor='#FFF' display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                <Box>
-                   <img style={{height: '200px', width: '340px'}} src="./images/CoolingEngine/4.png" alt=""/>
+                   <img style={{height: '200px', width: '340px'}} src={imageUrl} alt=""/>
                </Box>
                 <Box className={classes.imageHeader}>
-                    <h1>ПОЛУГЕРМЕТИЧНЫЕ КОМПАКТНЫЕ</h1>
+                    <h1>{text}</h1>
                 </Box>
             </Box>
         </>

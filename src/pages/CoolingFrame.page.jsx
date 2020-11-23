@@ -1,29 +1,10 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HomeShowCard from "../components/HomeShowCat.component";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 
-import CarFrameS1 from "../assets/CoolingFrame/CarFrameS1.png";
-import CarFrameS2 from "../assets/CoolingFrame/CarFrameS2.png";
-import CarFrameS3 from "../assets/CoolingFrame/CarFrameS3.png";
-import CarFrameS4 from "../assets/CoolingFrame/CarFrameS4.png";
-import CarFrameS5 from "../assets/CoolingFrame/CarFrameS5.png";
-import CarFrameS6 from "../assets/CoolingFrame/CarFrameS6.png";
-import CarFrameS7 from "../assets/CoolingFrame/CarFrameS7.png";
-import CarFrameS8 from "../assets/CoolingFrame/CarFrameS8.png";
-import CarFrameS9 from "../assets/CoolingFrame/CarFrameS9.png";
-import CarFrameS10 from "../assets/CoolingFrame/CarFrameS10.png";
-import CarFrameS11 from "../assets/CoolingFrame/CarFrameS11.png";
-
-import CoolingFramesSG1 from "../assets/CoolingFrame/CoolingFramesSG1.png";
-import CoolingFramesSG2 from "../assets/CoolingFrame/CoolingFramesSG2.png";
-import CoolingFramesSG3 from "../assets/CoolingFrame/CoolingFramesSG3.png";
-import CoolingFramesSG4 from "../assets/CoolingFrame/CoolingFramesSG4.png";
-import CoolingFramesSG5 from "../assets/CoolingFrame/CoolingFramesSG5.png";
-import CoolingFramesSG6 from "../assets/CoolingFrame/CoolingFramesSG6.png";
-
-import {CoolingFrameInfo} from "../data/InfoText.json";
+import {GlobalContext} from "../context/Main.context";
 
 const useStyles = makeStyles({
     hr: {
@@ -63,6 +44,13 @@ const useStyles = makeStyles({
         fontWeight: '300',
         lineHeight: '2rem',
         paddingRight: '5rem',
+
+        '&.changer': {
+            '& p': {
+                padding: 0,
+                margin: 0
+            }
+        }
     },
     submenu: {
         color: '#FFF',
@@ -144,6 +132,10 @@ const useStyles = makeStyles({
             fontWeight: '400',
         }
     },
+    imageGridContainer: {
+      flexWrap: 'nowrap',
+        gap: '1.5rem'
+    },
     imagecontainer: {
         gap: '1.5rem'
     },
@@ -165,190 +157,242 @@ const useStyles = makeStyles({
 
 const FrameRenderer = () => {
     const classes = useStyles();
+    const {coolingFramePageInfo, fetchCFPage} = useContext(GlobalContext);
+
+
+    const [subText, setSubText] = useState(0);
+
+    const handleSubText = (event, index) => {
+        const currentClass = document.getElementsByClassName('subTextcf');
+
+        Array.from(currentClass).forEach(cc => cc.classList.remove('active'));
+        console.log(currentClass);
+        event.target.classList.add('active');
+        setSubText(index);
+    }
+
+    useEffect(() => {
+        fetchCFPage();
+    }, [coolingFramePageInfo]);
 
     return (
-        <Box bgcolor="#1F1F23">
-            <Box bgcolor="#1F1F23" pt={'8rem'} pl={'3rem'}>
-                <HomeShowCard
-                    header={CoolingFrameInfo.mainH.header}
-                    text={``}
-                    imageUrl={CarFrameS1}
-                    imageHeight='25rem'
-                    imageWidth='38rem'
-                    leftSideText
-                />
-            </Box>
-            <Box width='50%' pl={'25%'} pt={'3rem'} bgcolor="#1F1F23">
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={4}>
-                    <Box pl={'3rem'}>
-                        <ul className={classes.optionlist}>
-                            {CoolingFrameInfo.subMenu.map(sb => <li>{sb.header}</li>)}
-                        </ul>
-                    </Box>
-                </Grid>
-                <Grid lg={8} className={classes.textlist}>
-                    <Box display='flex' alignItems='center' justifyContent='center'>
-                        <Box>
-                            {CoolingFrameInfo.subMenu[0].text}
-                        </Box>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='50%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={7}>
-                    <Box display='flex' alignItems='center' justifyContent='center'>
-                        <Box>
-                            <img style={{height: '520px', width: '700px'}} src={CarFrameS2}
-                                 alt="sandwich sub image1"/>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid lg={5} className={classes.textlist}>
-                    <Box pl={'5rem'}>
-                        <p>{CoolingFrameInfo.subOption.text1}</p>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='50%' pl={'47%'} pt={'5rem'} bgcolor="#1F1F23">
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={5} className={classes.textlist}>
-                    <Box pl={'5rem'}>
-                        <p>{CoolingFrameInfo.subOption.text2}</p>
-                    </Box>
-                </Grid>
-                <Grid lg={7}>
-                    <Box display='flex' alignItems='center' justifyContent='center' mt={'2rem'} pl={'3rem'}>
-                        <Box display='flex' className={classes.imagecontainer}>
-                            <Grid>
-                                <img style={{height: '100%', width: '350px'}} src={CarFrameS3}
-                                     alt="sandwich sub image1"/>
-                            </Grid>
-                            <Grid
-                                container
-                                direction="column"
-                                justify="space-between"
-                                alignItems="center"
-                                className={classes.imagecontainer}
-                            >
-                                <img src={CarFrameS4}
-                                     style={{height: '220px', width: '330px'}}
-                                     alt="sandwich sub image1"/>
-                                <img src={CarFrameS5}
-                                     style={{height: '220px', width: '330px'}}
-                                     alt="sandwich sub image1"/>
-                            </Grid>
-                        </Box>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='50%' pl={'3rem'} pt={'5rem'} bgcolor="#1F1F23">
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={6}>
-                    <Box display='flex' alignItems='center' justifyContent='center' pr={'8rem'}>
-                        <Box>
-                            <img style={{height: '400px', width: '600px'}} src={CarFrameS6}
-                                 alt="sandwich sub image1"/>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid lg={6}>
-                    <Box pr={'3rem'}>
-                        <Box className={classes.textlist}>
-                            <p>{CoolingFrameInfo.subOption.text3}</p>
-                        </Box>
-                        <Grid
-                            container
-                            direction="row"
-                            justify="space-between"
-                            alignItems="center"
-                        >
-                            <img src={CarFrameS7}
-                                 style={{height: '140px', width: '225px'}}
-                                 alt="sandwich sub image1"/>
-                            <img src={CarFrameS8}
-                                 style={{height: '140px', width: '225px'}}
-                                 alt="sandwich sub image1"/>
-                            <img src={CarFrameS9}
-                                 style={{height: '140px', width: '225px'}}
-                                 alt="sandwich sub image1"/>
-                        </Grid>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='50%' pl={'47%'} pt={'5rem'} bgcolor="#1F1F23">
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={6} className={classes.textlist}>
-                    <Box pl={'5rem'}>
-                        <p>{CoolingFrameInfo.subOption.text4}</p>
-                    </Box>
-                </Grid>
-                <Grid lg={6}>
-                    <Box display='flex' alignItems='center' justifyContent='center' pl={'1rem'} pr={'8rem'}>
-                        <Box>
-                            <img style={{height: '380px', width: '600px'}} src={CarFrameS10}
-                                 alt="sandwich sub image1"/>
-                        </Box>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='50%' pl={'3rem'} pt={'5rem'} bgcolor="#1F1F23">
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={5}>
-                    <Box ml={'8rem'} display='flex' alignItems='center' justifyContent='center' pr={'8rem'}>
-                        <Box>
-                            <img style={{height: '400px', width: '400px'}} src={CarFrameS11}
-                                 alt="sandwich sub image1"/>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid lg={7} className={classes.textlist}>
-                    <Box pl={'5rem'} display='flex' alignItems='center'>
-                        <p>{CoolingFrameInfo.subOption.text5}</p>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
-                <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
-                    <h1>Галерея</h1>
-                </Box>
-                <Box width='50%'>
-                    <hr className={classes.hr}/>
-                </Box>
-            </Box>
-            <Box width='100%'>
-                <Box
-                    className={classes.galleryContainer}
-                >
-                    <img src={CoolingFramesSG1}
-                         alt="sandwich sub image1"/>
-                    <img src={CoolingFramesSG2}
-                         alt="sandwich sub image1"/>
-                    <img src={CoolingFramesSG3}
-                         alt="sandwich sub image1"/>
-                    <img src={CoolingFramesSG4}
-                         alt="sandwich sub image1"/>
-                    <img src={CoolingFramesSG5}
-                         alt="sandwich sub image1"/>
-                    <img src={CoolingFramesSG6}
-                         alt="sandwich sub image1"/>
+        <>
+            {
+                coolingFramePageInfo.length < 1
+                    ? <h1>Loading...</h1>
+                    :
+                    (
+                        <>
 
-                </Box>
-            </Box>
-        </Box>
+                            <Box bgcolor="#1F1F23">
+                                <Box bgcolor="#1F1F23" pt={'8rem'} pl={'3rem'}>
+                                    <HomeShowCard
+                                        header={coolingFramePageInfo.mainH.header}
+                                        text={``}
+                                        imageUrl={coolingFramePageInfo.mainH.imageUrl}
+                                        imageHeight='25rem'
+                                        imageWidth='38rem'
+                                        leftSideText
+                                    />
+                                </Box>
+                                <Box width='50%' pl={'25%'} pt={'3rem'} bgcolor="#1F1F23">
+                                    <hr className={classes.hr}/>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Grid container>
+
+                                        <Grid item lg={4}>
+                                            <Box pl={'3rem'}>
+                                                <ul className={classes.optionlist}>
+                                                    {coolingFramePageInfo.subMenu.map((sb, index) => (
+                                                        <li className={`subTextcf ${index === 0 ? 'active' : ''}`}
+                                                            onClick={e => handleSubText(e, index)}
+                                                            key={sb.header}>
+                                                            {sb.header}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item lg={8} className={`${classes.textlist} changer`}>
+                                            <Box display='flex' alignItems='center' justifyContent='center'>
+                                                <Box>
+                                                    {Array.isArray(coolingFramePageInfo.subMenu[subText].text)
+                                                        ? (coolingFramePageInfo.subMenu[subText].text.map(par =>
+                                                            <p>{par}</p>))
+                                                        : <p>{coolingFramePageInfo.subMenu[subText].text}</p>
+                                                    }
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                                <Box width='50%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
+                                    <hr className={classes.hr}/>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Grid container>
+
+                                        <Grid item lg={7}>
+                                            <Box display='flex' alignItems='center' justifyContent='center'>
+                                                <Box>
+                                                    <img style={{height: '520px', width: '700px'}}
+                                                         src={coolingFramePageInfo.subOption[0].imageUrl}
+                                                         alt="sandwich sub image1"/>
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item lg={5} className={classes.textlist}>
+                                            <Box pl={'5rem'}>
+                                                <p>{coolingFramePageInfo.subOption[0].text}</p>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                                <Box width='50%' pl={'47%'} pt={'5rem'} bgcolor="#1F1F23">
+                                    <hr className={classes.hr}/>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Grid container >
+
+                                        <Grid item lg={5} className={classes.textlist}>
+                                            <Box pl={'5rem'}>
+                                                <p>{coolingFramePageInfo.subOption[1].text}</p>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item lg={7}>
+                                            <Box display='flex' alignItems='center' justifyContent='center' mt={'2rem'}
+                                                 pl={'3rem'}>
+                                                <Box display='flex' className={classes.imagecontainer}>
+                                                    <Grid container className={classes.imageGridContainer}>
+                                                        <Grid item>
+                                                            <img style={{height: '100%', width: '350px'}}
+                                                                 src={coolingFramePageInfo.subOption[1].imageUrl}
+                                                                 alt="sandwich sub image1"/>
+                                                        </Grid>
+                                                        <Grid item
+                                                              container
+                                                              direction="column"
+                                                              justify="space-between"
+                                                              alignItems="center"
+                                                              className={classes.imagecontainer}
+                                                        >
+                                                            {
+                                                                coolingFramePageInfo.subOption[1].images.map((el) => (
+                                                                    <img src={el}
+                                                                         style={{height: '220px', width: '330px'}}
+                                                                         alt=""/>
+                                                                ))
+                                                            }
+                                                        </Grid>
+                                                    </Grid>
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                                <Box width='50%' pl={'3rem'} pt={'5rem'} bgcolor="#1F1F23">
+                                    <hr className={classes.hr}/>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Grid container>
+
+                                        <Grid item lg={6}>
+                                            <Box display='flex' alignItems='center' justifyContent='center' pr={'8rem'}>
+                                                <Box>
+                                                    <img style={{height: '400px', width: '600px'}}
+                                                         src={coolingFramePageInfo.subOption[2].imageUrl}
+                                                         alt="sandwich sub image1"/>
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item lg={6}>
+                                            <Box pr={'3rem'}>
+                                                <Box className={classes.textlist}>
+                                                    <p>{coolingFramePageInfo.subOption[2].text}</p>
+                                                </Box>
+                                                <Grid
+                                                    container
+                                                    direction="row"
+                                                    justify="space-between"
+                                                    alignItems="center"
+                                                >
+                                                    {
+                                                        coolingFramePageInfo.subOption[2].images.map(el => (
+                                                            <img src={el}
+                                                                 style={{height: '140px', width: '225px'}}
+                                                                 alt=""/>
+                                                        ))
+                                                    }
+                                                </Grid>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                                <Box width='50%' pl={'47%'} pt={'5rem'} bgcolor="#1F1F23">
+                                    <hr className={classes.hr}/>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Grid lg={6} className={classes.textlist}>
+                                        <Box pl={'5rem'}>
+                                            <p>{coolingFramePageInfo.subOption[3].text}</p>
+                                        </Box>
+                                    </Grid>
+                                    <Grid lg={6}>
+                                        <Box display='flex' alignItems='center' justifyContent='center' pl={'1rem'}
+                                             pr={'8rem'}>
+                                            <Box>
+                                                <img style={{height: '380px', width: '600px'}}
+                                                     src={coolingFramePageInfo.subOption[3].imageUrl}
+                                                     alt="sandwich sub image1"/>
+                                            </Box>
+                                        </Box>
+                                    </Grid>
+                                </Box>
+                                <Box width='50%' pl={'3rem'} pt={'5rem'} bgcolor="#1F1F23">
+                                    <hr className={classes.hr}/>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Grid lg={5}>
+                                        <Box ml={'8rem'} display='flex' alignItems='center' justifyContent='center'
+                                             pr={'8rem'}>
+                                            <Box>
+                                                <img style={{height: '400px', width: '400px'}}
+                                                     src={coolingFramePageInfo.subOption[4].imageUrl}
+                                                     alt="sandwich sub image1"/>
+                                            </Box>
+                                        </Box>
+                                    </Grid>
+                                    <Grid lg={7} className={classes.textlist}>
+                                        <Box pl={'5rem'} display='flex' alignItems='center'>
+                                            <p>{coolingFramePageInfo.subOption[4].text}</p>
+                                        </Box>
+                                    </Grid>
+                                </Box>
+                                <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
+                                    <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
+                                        <h1>{coolingFramePageInfo.imagesContainer.header}</h1>
+                                    </Box>
+                                    <Box width='50%'>
+                                        <hr className={classes.hr}/>
+                                    </Box>
+                                </Box>
+                                <Box width='100%'>
+                                    <Box
+                                        className={classes.galleryContainer}
+                                    >
+                                        {
+                                            coolingFramePageInfo.imagesContainer.images.map(el => (
+                                                <img src={el}
+                                                     alt="sandwich sub image1"/>
+                                            ))
+                                        }
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </>
+                    )}
+        </>
     )
 }
 

@@ -1,16 +1,11 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HomeShowCard from "../components/HomeShowCat.component";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
 
-import SandwichPanelH1Image from "../assets/SandwichPanel/SandwichPanelH1.png";
-import SandwichPanelSub1 from "../assets/SandwichPanel/SandwichPanelSub1.png";
-import SandwichPanelSub2 from "../assets/SandwichPanel/SandwichPanelSub2.png";
-import SandwichPanelSub3 from "../assets/SandwichPanel/SandwichPanelSub3.png";
-import CalcCarcas1 from "../assets/SandwichPanel/CalcCarcas1.png";
-import {SandwichPanelInfo} from "../data/InfoText.json";
 import Card from "@material-ui/core/Card";
+import {GlobalContext} from "../context/Main.context";
 
 const useStyles = makeStyles({
     hr: {
@@ -134,137 +129,239 @@ const useStyles = makeStyles({
     },
 });
 
-const SandwichRenderer = () => {
+const SandwichRenderer = ({history}) => {
     const classes = useStyles();
+    const {sandwichPanelPageInfo, fetchSPPage} = useContext(GlobalContext);
+
+    const [subText, setSubText] = useState(0);
+    const [subOption, setSubOption] = useState(0);
+    const [subRoof, setSubRoof] = useState(0);
+
+    const handleSubText = (event, index) => {
+        const currentClass = document.getElementsByClassName('subTextli');
+
+        Array.from(currentClass).forEach(cc => cc.classList.remove('active'));
+        console.log(currentClass);
+        event.target.classList.add('active');
+        setSubText(index);
+    }
+
+    const handleSubOption = (event, index) => {
+        const currentClass = document.getElementsByClassName('subOptionItem');
+
+        Array.from(currentClass).forEach(cc => cc.classList.remove('active'));
+        event.target.classList.add('active');
+        setSubOption(index);
+    }
+
+    const handleRoofOption = (event, index) => {
+        const currentClass = document.getElementsByClassName('roofOptionItem');
+
+        Array.from(currentClass).forEach(cc => cc.classList.remove('active'));
+        event.target.classList.add('active');
+        setSubRoof(index);
+    }
+
+    useEffect(() => {
+        fetchSPPage();
+    }, [sandwichPanelPageInfo, history])
+
 
     return (
-        <Box bgcolor="#1F1F23">
-            <Box bgcolor="#1F1F23" pt={'8rem'} pl={'3rem'}>
-                <HomeShowCard
-                    header={SandwichPanelInfo.mainH.header}
-                    text={SandwichPanelInfo.mainH.text}
-                    imageUrl={SandwichPanelH1Image}
-                    imageHeight='25rem'
-                    imageWidth='38rem'
-                    leftSideText
-                />
-            </Box>
-            <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={4}>
-                    <Box pl={'3rem'}>
-                        <ul className={classes.optionlist}>
-                            <ul className={classes.optionlist}>
-                                {SandwichPanelInfo.subMenu.map(sb => <li>{sb.header}</li>)}
-                            </ul>
-                        </ul>
-                    </Box>
-                </Grid>
-                <Grid lg={8} className={classes.textlist}>
-                    <Box display='flex' alignItems='center' justifyContent='center'>
-                        <Box>
-                            <p>{SandwichPanelInfo.subMenu[0].text}</p>
+        <>
+            {sandwichPanelPageInfo.length < 1
+                ? <h1>Loading...</h1>
+                : <>
+                    <Box bgcolor="#1F1F23">
+                        <Box bgcolor="#1F1F23" pt={'8rem'} pl={'3rem'}>
+                            <HomeShowCard
+                                header={sandwichPanelPageInfo.mainH.header}
+                                text={sandwichPanelPageInfo.mainH.text}
+                                imageUrl={sandwichPanelPageInfo.mainH.imageUrl}
+                                imageHeight='25rem'
+                                imageWidth='38rem'
+                                leftSideText
+                            />
                         </Box>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
-                <Box display='flex' justifyContent='space-between' className={classes.submenu}>
-                    <p>Стеновые</p>
-                    <p className={`active`}>Кровельные</p>
-                </Box>
-                <hr className={classes.hr}/>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={7} className={classes.textlist}>
-                    <Box pl={'5rem'}>
-                        <p>{SandwichPanelInfo.subOption.option1.header1}</p>
-                    </Box>
-                </Grid>
-                <Grid lg={5}>
-                    <Box display='flex' alignItems='center' justifyContent='center' pr={'3rem'}>
-                        <Box>
-                            <img style={{height: '400px', width: '500px'}} src={SandwichPanelSub1}
-                                 alt="sandwich sub image1"/>
+                        <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
+                            <hr className={classes.hr}/>
                         </Box>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={5}>
-                    <Box display='flex' alignItems='center' justifyContent='center' mt={'2rem'} pl={'3rem'}>
-                        <Box>
-                            <img style={{height: '300px', width: '500px'}} src={SandwichPanelSub2}
-                                 alt="sandwich sub image1"/>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid lg={7} className={classes.textlist}>
-                    <Box pl={'5rem'}>
-                        <p>{SandwichPanelInfo.subOption.option1.header2}</p>
-                    </Box>
-                </Grid>
-
-            </Box>
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={7} className={classes.textlist}>
-                    <Box pl={'5rem'}>
-                        <p>{SandwichPanelInfo.subOption.option1.header3}</p>
-                    </Box>
-                </Grid>
-                <Grid lg={5}>
-                    <Box display='flex' alignItems='center' justifyContent='center' pr={'8rem'}>
-                        <Box>
-                            <img style={{height: '400px', width: '600px'}} src={SandwichPanelSub3}
-                                 alt="sandwich sub image1"/>
-                        </Box>
-                    </Box>
-                </Grid>
-            </Box>
-            <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
-                <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
-                    <h1>Калькулятор стоимости</h1>
-                </Box>
-                <hr className={classes.hr}/>
-            </Box>
-
-            <Box display='flex' mt={'5rem'}>
-                <Grid lg={7}>
-                    <Box display='flex' alignItems='center' justifyContent='center'>
-                        <Box className={classes.calcsection}>
-                            <img style={{height: '400px', width: '600px'}} src={CalcCarcas1}
-                                 alt="sandwich sub image1"/>
-                            <input type="number" id='inlength'/>
-                            <input type="number" id='inheight'/>
-                            <input type="numbers" id='inwidth'/>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid lg={5}>
-                    <Box pl={'5rem'}>
-                        <Card className={classes.calccard}>
-                            <Box height='100%' display='flex' flexDirection='column' justifyContent='space-between'>
-                                <Box>
-                                    <Box display='flex' justifyContent='space-between' className={classes.submenu2}>
-                                        <p>Двускатная</p>
-                                        <p>Односкатная</p>
-                                        <p className={`active`}>Без крыши</p>
+                        <Box display='flex' mt={'5rem'}>
+                            <Grid container>
+                                <Grid item lg={4}>
+                                    <Box pl={'3rem'}>
+                                        <ul className={classes.optionlist}>
+                                            {sandwichPanelPageInfo.subMenu.map((sb, index) => (
+                                                <li className={`subTextli ${index === 0 ? 'active' : ''}`}
+                                                    onClick={e => handleSubText(e, index)}
+                                                    key={sb.header}>
+                                                    {sb.header}
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </Box>
-                                    <hr/>
-                                </Box>
-                                <Box className={classes.calcresults} mb={'2rem'}>
-                                    <h3>Площадь кровли: 77.03 м2</h3>
-                                    <h3>Площадь стен: 90.00 м2</h3>
-                                    <h2>Итого: 167.03 м2</h2>
-                                </Box>
+                                </Grid>
+                                <Grid item lg={8} className={classes.textlist}>
+                                    <Box width='100%' display='flex' alignItems='center' justifyContent='flex-start'>
+                                        <Box>
+                                            {Array.isArray(sandwichPanelPageInfo.subMenu[subText].text)
+                                                ? (sandwichPanelPageInfo.subMenu[subText].text.map(par => <p>{par}</p>))
+                                                : <p>{sandwichPanelPageInfo.subMenu[subText].text}</p>
+                                            }
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
+                            <Box display='flex' justifyContent='space-between' className={classes.submenu}>
+                                {
+                                    sandwichPanelPageInfo.subOption.map((ty, index) => (
+                                            <p
+                                                className={`subOptionItem ${index === 0 ? 'active' : ''}`}
+                                                onClick={(e) => handleSubOption(e, index)}>
+                                                {ty.type}
+                                            </p>
+                                        )
+                                    )
+                                }
                             </Box>
-                        </Card>
+                            <hr className={classes.hr}/>
+                        </Box>
+                        <Box display='flex' mt={'5rem'}>
+                            <Grid container>
+                                <Grid item lg={7} className={classes.textlist}>
+                                    <Box pl={'5rem'}>
+                                        <p>{sandwichPanelPageInfo.subOption[subOption].content.header1}</p>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={5}>
+                                    <Box display='flex' alignItems='center' justifyContent='center' pr={'3rem'}>
+                                        <Box>
+                                            <img style={{height: '400px', width: '500px'}}
+                                                 src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl1}
+                                                 alt="sandwich sub image1"/>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <Box display='flex' mt={'5rem'}>
+                            <Grid container>
+                                <Grid item lg={5}>
+                                    <Box display='flex' alignItems='center' justifyContent='center' mt={'2rem'}
+                                         pl={'3rem'}>
+                                        <Box>
+                                            <img style={{height: '300px', width: '500px'}}
+                                                 src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl2}
+                                                 alt="sandwich sub image1"/>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={7} className={classes.textlist}>
+                                    <Box pl={'5rem'}>
+                                        <p>{sandwichPanelPageInfo.subOption[subOption].content.header2}</p>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <Box display='flex' mt={'5rem'}>
+                            <Grid container>
+                                <Grid item lg={7} className={classes.textlist}>
+                                    <Box pl={'5rem'}>
+                                        <p>{sandwichPanelPageInfo.subOption[subOption].content.header3}</p>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={5}>
+                                    <Box display='flex' alignItems='center' justifyContent='center' pr={'8rem'}>
+                                        <Box>
+                                            <img style={{height: '400px', width: '600px'}}
+                                                 src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl3}
+                                                 alt="sandwich sub image1"/>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <Box width='30%' pl={'5.5rem'} pt={'8rem'} bgcolor="#1F1F23">
+                            <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
+                                <h1>Калькулятор стоимости</h1>
+                            </Box>
+                            <hr className={classes.hr}/>
+                        </Box>
+
+                        <Box display='flex' mt={'5rem'}>
+                            <Grid container>
+                                <Grid item lg={7}>
+                                    <Box display='flex' alignItems='center' justifyContent='center'>
+                                        <Box className={classes.calcsection}>
+                                            <img style={{height: '400px', width: '600px'}}
+                                                 src={sandwichPanelPageInfo.calcRoof[subRoof].imageUrl}
+                                                 alt="sandwich sub image1"/>
+                                            {sandwichPanelPageInfo.calcRoof[subRoof].inputNum === 3
+                                                ? (
+                                                    <>
+                                                        <input type="number" id='inlength'/>
+                                                        <input type="number" id='inheight'/>
+                                                        <input type="numbers" id='inwidth'/>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <input type="number" id='inlength'/>
+                                                        <input type="number" id='inheight'/>
+                                                        <input type="numbers" id='inwidth'/>
+                                                        <input type="numbers" id='inwidth'/>
+                                                    </>
+                                                )
+                                            }
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                                <Grid item lg={5}>
+                                    <Box pl={'5rem'}>
+                                        <Card className={classes.calccard}>
+                                            <Box height='100%' display='flex' flexDirection='column'
+                                                 justifyContent='space-between'>
+                                                <Box>
+                                                    <Box display='flex' justifyContent='space-between'
+                                                         className={classes.submenu2}>
+                                                        {
+                                                            sandwichPanelPageInfo.calcRoof.map((ri, index) => (
+                                                                <p
+                                                                    className={`roofOptionItem ${index === 0 ? 'active' : ''}`}
+                                                                    onClick={e => handleRoofOption(e, index)}
+                                                                >
+                                                                    {ri.type}
+                                                                </p>
+                                                            ))
+                                                        }
+                                                    </Box>
+                                                    <hr/>
+                                                </Box>
+                                                <Box className={classes.calcresults} mb={'2rem'}>
+                                                    {
+                                                        sandwichPanelPageInfo.calcRoof[subRoof].header
+                                                            ? (
+                                                                <Box>
+                                                                    <p>{sandwichPanelPageInfo.calcRoof[subRoof].header}</p>
+                                                                </Box>
+                                                            )
+                                                            : ''
+                                                    }
+                                                    <h3>Площадь кровли: 77.03 м2</h3>
+                                                    <h3>Площадь стен: 90.00 м2</h3>
+                                                    <h2>Итого: 167.03 м2</h2>
+                                                </Box>
+                                            </Box>
+                                        </Card>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
                     </Box>
-                </Grid>
-            </Box>
-        </Box>
+                </>
+            }
+        </>
     )
 }
 

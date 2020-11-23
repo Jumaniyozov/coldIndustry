@@ -8,13 +8,8 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Box from "@material-ui/core/Box";
-import HamburgerMenuIcon from "../assets/HamburgerMenu.svg";
-import SiteLogo from "../assets/SiteLogoText.svg";
 
 const useStyles = makeStyles({
     list: {
@@ -40,6 +35,10 @@ const useStyles = makeStyles({
     },
     sideList: {
         color: 'white',
+
+        '& hr': {
+            display: 'none'
+        }
     },
     header: {
         width: "100%",
@@ -47,7 +46,11 @@ const useStyles = makeStyles({
         position: "fixed",
         zIndex: 999,
 
-
+        '& #siteLogo': {
+            ["@media (max-width:460px)"]: {
+                width: '100%'
+            }
+        }
     }
 });
 
@@ -131,7 +134,8 @@ export default function Header() {
                 <Link to='/'>
                     <Box ml={3}>
                         <img
-                            src={SiteLogo}
+                            id='siteLogo'
+                            src={'./images/SiteLogoText.svg'}
                             style={{height: '50px'}}
                             alt="website logo"
                         />
@@ -142,7 +146,7 @@ export default function Header() {
                     <React.Fragment key={anchor}>
                         <Button onClick={toggleDrawer(anchor, true)}>
                             <img
-                                src={HamburgerMenuIcon}
+                                src={'./images/HamburgerMenu.svg'}
                                 style={{height: '25px', width: '25px'}}
                                 alt="hamburger Menu"
                             />

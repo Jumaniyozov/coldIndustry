@@ -18,18 +18,12 @@ const useStyles = makeStyles({
         background: 'none',
         transition: "background-image 2s ease-in-out",
 
-        '& h1': {
-            margin: 0,
-            fontSize: '1.8rem'
-        },
-        '& p': {
-            fontSize: '1rem',
-            lineHeight: '1.2rem',
-            width: '100%',
-        },
-
         "&:hover": {
             background: "linear-gradient(to bottom, #D38716 , #D6B600)"
+        },
+
+        ["@media (max-width:500px)"]: {
+            borderRadius: '5px',
         }
     }
 });
@@ -38,7 +32,7 @@ const useStyles = makeStyles({
 const InfoText = ({header, content, side = false}) => {
     const {infoText, leftBorder} = useStyles();
     return (
-        <Box height="9rem" width="13.5rem" display='flex' flexDirection="column"
+        <Box width="13.5rem" display='flex' flexDirection="column"
              className={`${infoText} ${side ? leftBorder : ''}`}>
             <Box pl={2} pt={1} pr={1}>
                 <h1>{header}</h1>

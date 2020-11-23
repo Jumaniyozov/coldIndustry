@@ -1,6 +1,5 @@
 import Box from "@material-ui/core/Box";
 import ButtonCstm from "./Button.component";
-import SandwichImg from "../assets/Group 29.png";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Link} from "react-router-dom";
@@ -8,8 +7,20 @@ import {Link} from "react-router-dom";
 
 const useStyles = makeStyles({
     mainBox: {
-        alignItems: 'center',
-        justifyContent: 'center',
+
+        '& .downToMd': {
+            display: 'none',
+        },
+
+        ["@media (max-width:650px)"]: {
+            '& .downToMd': {
+                display: 'flex',
+            },
+            '& .upToLg': {
+                display: 'none'
+            }
+
+        }
     },
 
     boxLeft: {
@@ -17,8 +28,7 @@ const useStyles = makeStyles({
         color: 'white',
         display: 'flex',
         flexDirection: 'column',
-        paddingTop: "2rem",
-        paddingLeft: "5rem",
+        padding: '2rem',
 
         "& p": {
             fontSize: "1.525rem",
@@ -31,6 +41,19 @@ const useStyles = makeStyles({
             fontWeight: "bold",
             fontSize: "2.9rem",
             lineHeight: "3.5rem"
+        },
+
+        ["@media (max-width:650px)"]: {
+            width: "100%",
+            "& p": {
+                padding: 0,
+                margin: 0
+            },
+
+            "& h1": {
+                padding: 0,
+                margin: 0
+            },
         }
     }
 });
@@ -40,55 +63,106 @@ const HomeShowCard = ({
                           text = 'text',
                           btnText = 'button',
                           leftSideText = false,
-                          imageUrl = SandwichImg,
+                          imageUrl,
                           imageHeight = '600px',
                           imageWidth = '600px',
                           linkTo,
+                          className
                       }) => {
     const classes = useStyles();
 
     return (
         <>
-            <Box display='flex' width="100%" className={classes.mainBox}>
+            <Box width="100%" className={`${classes.mainBox} ${className}`}>
                 {
                     leftSideText
                         ? (<>
-                            <Box width="50%" pt={"2rem"} display='flex' alignItems='center' justifyContent='center'>
-                                <Box pt={3}>
-                                    <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
-                                         alt={`${header}`}/>
+                            <Box className='upToLg' display='flex' width='100%' alignItems='center' justifyContent='center'>
+                                <Box width="50%" pt={"2rem"} display='flex' alignItems='center' justifyContent='center'>
+                                    <Box>
+                                        <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
+                                             alt={`${header}`}/>
+                                    </Box>
+                                </Box>
+                                <Box className={classes.boxLeft}>
+                                    <Box>
+                                        <h1>{header}</h1>
+                                        <p>{text}</p>
+                                        {linkTo && <Link to={`${linkTo}`}>
+                                            <ButtonCstm width={'15rem'} height={'3rem'}>
+                                                {btnText}
+                                            </ButtonCstm>
+                                        </Link>
+                                        }
+                                    </Box>
                                 </Box>
                             </Box>
-                            <Box className={classes.boxLeft}>
-                                <Box pr={5}>
-                                    <h1>{header}</h1>
-                                    <p>{text}</p>
-                                    {linkTo && <Link to={`${linkTo}`}>
-                                        <ButtonCstm width={'15rem'} height={'3rem'}>
-                                            {btnText}
-                                        </ButtonCstm>
-                                    </Link>
-                                    }
+                            <Box className='downToMd'
+                                 display='flex'
+                                 width='100%'
+                                 alignItems='center'
+                                 justifyContent='center'
+                            >
+                                <Box className={classes.boxLeft}>
+                                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
+                                        <h1>{header}</h1>
+                                        <p>{text}</p>
+                                        <Box pt={2} pb={2}>
+                                            <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
+                                                 alt={`${header}`}/>
+                                        </Box>
+                                        {linkTo && <Link to={`${linkTo}`}>
+                                            <ButtonCstm width={'15rem'} height={'3rem'}>
+                                                {btnText}
+                                            </ButtonCstm>
+                                        </Link>
+                                        }
+                                    </Box>
                                 </Box>
                             </Box>
                         </>)
                         : (<>
-                            <Box className={classes.boxLeft}>
-                                <Box pr={5}>
-                                    <h1>{header}</h1>
-                                    <p>{text}</p>
-                                    {linkTo && <Link to={`${linkTo}`}>
-                                        <ButtonCstm width={'15rem'} height={'3rem'}>
-                                            {btnText}
-                                        </ButtonCstm>
-                                    </Link>
-                                    }
+                            <Box className='upToLg' display='flex' width='100%' alignItems='center' justifyContent='center'>
+                                <Box className={classes.boxLeft}>
+                                    <Box>
+                                        <h1>{header}</h1>
+                                        <p>{text}</p>
+                                        {linkTo && <Link to={`${linkTo}`}>
+                                            <ButtonCstm width={'15rem'} height={'3rem'}>
+                                                {btnText}
+                                            </ButtonCstm>
+                                        </Link>
+                                        }
+                                    </Box>
+                                </Box>
+                                <Box width="50%" pt={"2rem"} display='flex' alignItems='center' justifyContent='center'>
+                                    <Box>
+                                        <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
+                                             alt={`${header}`}/>
+                                    </Box>
                                 </Box>
                             </Box>
-                            <Box width="50%" pt={"2rem"} display='flex' alignItems='center' justifyContent='center'>
-                                <Box pt={3}>
-                                    <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
-                                         alt={`${header}`}/>
+                            <Box className='downToMd'
+                                 display='flex'
+                                 width='100%'
+                                 alignItems='center'
+                                 justifyContent='center'
+                            >
+                                <Box className={classes.boxLeft}>
+                                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
+                                        <h1>{header}</h1>
+                                        <p>{text}</p>
+                                        <Box pt={2} pb={2}>
+                                            <img style={{height: `${imageHeight}`, width: `${imageWidth}`}} src={imageUrl}
+                                                 alt={`${header}`}/>
+                                        </Box>
+                                        {linkTo && <Link to={`${linkTo}`}>
+                                            <ButtonCstm width={'15rem'} height={'3rem'}>
+                                                {btnText}
+                                            </ButtonCstm>
+                                        </Link>
+                                        }
+                                    </Box>
                                 </Box>
                             </Box>
                         </>)

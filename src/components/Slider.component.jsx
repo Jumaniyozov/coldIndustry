@@ -8,7 +8,6 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
-import Box from "@material-ui/core/Box";
 import React from "react";
 import SliderCardMain from "./SliderCardMain.component";
 import SliderCard from "./SliderCard.component";
@@ -37,7 +36,7 @@ const useStyles = makeStyles({
     }
 })
 
-const SliderComponent = ({perSlideView = 3}) => {
+const SliderComponent = ({perSlideView = 3, data = [], soloComponent = false}) => {
     const classes = useStyles();
     return (
         <Swiper
@@ -52,15 +51,16 @@ const SliderComponent = ({perSlideView = 3}) => {
             onSlideChange={() => console.log("slide change")}
         >
             {
-                perSlideView === 1
+                (data.soloComponent)
                     ? (
-                        <SwiperSlide><SliderCardMain/></SwiperSlide>
+                        <SwiperSlide><SliderCardMain data={data}/></SwiperSlide>
                     ) : (
                         <>
-                            <SwiperSlide><SliderCard /></SwiperSlide>
-                            <SwiperSlide><SliderCard /></SwiperSlide>
-                            <SwiperSlide><SliderCard /></SwiperSlide>
-                            <SwiperSlide><SliderCard /></SwiperSlide>
+                            {
+                                data.map(el => (
+                                    <SwiperSlide><SliderCard text={el.header} imageUrl={el.imageUrl}/></SwiperSlide>
+                                ))
+                            }
                         </>
                     )
             }

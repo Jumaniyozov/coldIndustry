@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import Box from "@material-ui/core/Box";
-import {AboutInfo} from "../data/InfoText.json";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import {GlobalContext} from "../context/Main.context";
 
 
 const useStyles = makeStyles({
@@ -89,59 +89,71 @@ const useStyles = makeStyles({
 const AboutPageRenderer = () => {
     const classes = useStyles();
 
+    const {aboutPageInfo, fetchAboutPage} = useContext(GlobalContext);
+
+    useEffect(() => {
+        fetchAboutPage();
+    }, [aboutPageInfo])
+
     return (
         <>
-            <Box bgcolor="#1F1F23" pt='8rem' pl={'3rem'}>
-                <Box className={classes.heroSection}>
-                    <p>
-                        <span className={`header1`}>
-                            {AboutInfo.mainSection.header1}
-                        </span>
-                        {AboutInfo.mainSection.text1}
-                    </p>
-                    <Box mt={'5rem'}>
-                        <p style={{fontStyle: 'italic'}}>{AboutInfo.mainSection.text2}</p>
-                    </Box>
-                </Box>
-                <Box className={`${classes.heroSection} list`} mt={'5rem'}>
-                    <h2>
-                        {AboutInfo.mainSection.header2}
-                    </h2>
-                    {AboutInfo.mainSection.text3.map(text => <p>{text}</p>)}
-                </Box>
-                <Box pt='3rem'>
-                    <Box width='80%' className={`${classes.heroSection} list2`}>
-                        <h1>
-                            {AboutInfo.secondSection.header}
-                        </h1>
-                        {AboutInfo.secondSection.text.map(text => <p>{text}</p>)}
-                    </Box>
-                </Box>
-                <Box pt='3rem'>
-                    <Box className={`${classes.heroSection} list3`}>
-                        <Box width='80%'>
-                            <h1>
-                                {AboutInfo.thirdSection.header}
-                            </h1>
-                        </Box>
-                        <Box width='90%'>
-                            {AboutInfo.thirdSection.text.map(text => <p>{text}</p>)}
-                        </Box>
-                    </Box>
-                </Box>
-                <Box pt='3rem'>
-                    <Box className={`${classes.heroSection} list2`}>
-                        <Box width='80%'>
-                            <h1>
-                                {AboutInfo.lastSection.header}
-                            </h1>
-                        </Box>
-                        <Box width='90%'>
-                            {AboutInfo.lastSection.text.map(text => <p>{text}</p>)}
-                        </Box>
-                    </Box>
-                </Box>
-            </Box>
+            {
+                aboutPageInfo.length < 1
+                    ? <h1>Loading...</h1>
+                    : (<>
+                            <Box bgcolor="#1F1F23" pt='8rem' pl={'3rem'}>
+                                <Box className={classes.heroSection}>
+                                    <p>
+                                        <span className={`header1`}>
+                                            {aboutPageInfo.mainSection.header1}
+                                        </span>
+                                        {aboutPageInfo.mainSection.text1}
+                                    </p>
+                                    <Box mt={'5rem'}>
+                                        <p style={{fontStyle: 'italic'}}>{aboutPageInfo.mainSection.text2}</p>
+                                    </Box>
+                                </Box>
+                                <Box className={`${classes.heroSection} list`} mt={'5rem'}>
+                                    <h2>
+                                        {aboutPageInfo.mainSection.header2}
+                                    </h2>
+                                    {aboutPageInfo.mainSection.text3.map(text => <p>{text}</p>)}
+                                </Box>
+                                <Box pt='3rem'>
+                                    <Box width='80%' className={`${classes.heroSection} list2`}>
+                                        <h1>
+                                            {aboutPageInfo.secondSection.header}
+                                        </h1>
+                                        {aboutPageInfo.secondSection.text.map(text => <p>{text}</p>)}
+                                    </Box>
+                                </Box>
+                                <Box pt='3rem'>
+                                    <Box className={`${classes.heroSection} list3`}>
+                                        <Box width='80%'>
+                                            <h1>
+                                                {aboutPageInfo.thirdSection.header}
+                                            </h1>
+                                        </Box>
+                                        <Box width='90%'>
+                                            {aboutPageInfo.thirdSection.text.map(text => <p>{text}</p>)}
+                                        </Box>
+                                    </Box>
+                                </Box>
+                                <Box pt='3rem'>
+                                    <Box className={`${classes.heroSection} list2`}>
+                                        <Box width='80%'>
+                                            <h1>
+                                                {aboutPageInfo.lastSection.header}
+                                            </h1>
+                                        </Box>
+                                        <Box width='90%'>
+                                            {aboutPageInfo.lastSection.text.map(text => <p>{text}</p>)}
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </>
+                    )}
         </>
     );
 };
