@@ -68,6 +68,11 @@ const useStyles = makeStyles({
             '& p': {
                 display: 'none'
             },
+        },
+        ["@media (max-width:480px)"]: {
+            '& h1': {
+                fontSize: '1.25rem'
+            }
         }
     },
     containerToLg: {

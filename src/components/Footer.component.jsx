@@ -20,6 +20,11 @@ const useStyles = makeStyles({
             '& h1': {
                 fontSize: '2rem'
             }
+        },
+        ["@media (max-width:480px)"]: {
+            '& h1': {
+                fontSize: '1.5rem'
+            }
         }
     },
     formControl: {

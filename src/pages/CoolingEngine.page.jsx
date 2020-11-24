@@ -16,6 +16,11 @@ const useStyles = makeStyles({
         height: '2px',
         border: 'none'
     },
+    hrContainer: {
+        ["@media (max-width: 880px)"]: {
+            width: '75%'
+        },
+    },
     headers: {
         color: '#FFF',
         textTransform: 'uppercase',
@@ -27,6 +32,12 @@ const useStyles = makeStyles({
             '& h1': {
                 fontSize: '1.75rem'
             },
+        },
+
+        ["@media (max-width:480px)"]: {
+            '& h1': {
+                fontSize: '1.5rem'
+            }
         }
     },
     imageContainer: {
@@ -34,10 +45,18 @@ const useStyles = makeStyles({
             display: 'none'
         }
     },
+    subHeaderContainer: {
+
+        ["@media (max-width: 880px)"]: {
+            paddingLeft: 0
+        }
+    },
     subHeader: {
         '& h1': {
             color: '#FFF'
-        }
+        },
+
+
     },
     galleryContainer: {
         padding: '2.5% 7.5%',
@@ -49,7 +68,11 @@ const useStyles = makeStyles({
             objectFit: 'cover',
             width: '100%',
             maxHeight: '100%'
-        }
+        },
+
+        ["@media (max-width: 880px)"]: {
+            gridTemplateColumns: 'repeat(2, 1fr)',
+        },
     },
     menuContainer: {
 
@@ -260,11 +283,11 @@ const CoolingEnginePage = () => {
                         <Box bgcolor='#FFF'>
                             <SliderComponent data={coolingEnginePageInfo.section5.content} perSlideView={1}/>
                         </Box>
-                        <Box width='80%' pl={'5.5rem'} pt={'5rem'}>
+                        <Box width='80%' pl={'5.5rem'} pt={'5rem'} className={classes.subHeaderContainer}>
                             <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
                                 <h1>{coolingEnginePageInfo.refDoors.header}</h1>
                             </Box>
-                            <Box width='25%'>
+                            <Box width='25%' className={classes.hrContainer}>
                                 <hr className={classes.hr}/>
                             </Box>
                         </Box>

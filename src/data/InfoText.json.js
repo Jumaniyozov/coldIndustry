@@ -299,7 +299,8 @@ export const DoorInfo = {
         text: `Наша компания следит за тенденциями мировой интерьерной моды`,
         imageUrl: `./images/Doors/HeroImageDoors.png`,
         secondaryLogo: `./images/Doors/DoorLogo.svg`,
-        littleSign: `./images/Doors/LittleSigns.png`
+        littleSign: `./images/Doors/LittleSigns.png`,
+        btnText: `Каталог`
     },
     subMenu: {
         header: `Преимущества`,
@@ -566,7 +567,8 @@ export const PenoplastInfo = {
     mainH: {
         header: `Пенополистерол`,
         text: `ООО «COLD INDUSTRY» производит высококачественный пенопласт (пенополистирол) в плитах, размером 6000х1220х600 мм. Продукция изготавливается на современном оборудовании из импортного сырья.`,
-        imageUrl: `./images/Penoplast/HeroImage.png`
+        imageUrl: `./images/Penoplast/HeroImage.png`,
+        btnText: 'Прайс-лист'
     },
     subMenu: {
         header1: `Сфера применения пенопласта:`,

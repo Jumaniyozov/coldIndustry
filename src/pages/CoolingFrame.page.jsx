@@ -375,7 +375,6 @@ const FrameRenderer = () => {
                     :
                     (
                         <>
-
                             <Box bgcolor="#1F1F23" pl={'3rem'} pr={'3rem'}>
                                 <Box bgcolor="#1F1F23" pt={'8rem'} display='flex' className={classes.menuContainer}>
                                     <Box width="50%" pt={"2rem"} display='flex' alignItems='center'
