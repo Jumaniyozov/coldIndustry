@@ -5,7 +5,10 @@ import {GlobalContext} from "../context/Main.context";
 
 
 const useStyles = makeStyles({
+    root: {
+    },
     heroSection: {
+
         '&.list': {
             "& p": {
                 lineHeight: "3.5rem",
@@ -16,7 +19,7 @@ const useStyles = makeStyles({
             "& p": {
                 lineHeight: "2rem",
                 marginTop: '1.5rem',
-            }
+            },
         },
 
         '&.list3': {
@@ -24,7 +27,7 @@ const useStyles = makeStyles({
                 fontSize: '1.5rem',
                 lineHeight: "2rem",
                 marginTop: '2rem',
-            }
+            },
         },
 
         "& p": {
@@ -48,7 +51,104 @@ const useStyles = makeStyles({
             fontSize: "2rem",
             lineHeight: "3.5rem",
             color: '#FFF'
-        }
+        },
+
+        ["@media (max-width: 880px)"]: {
+
+            "& p": {
+                fontSize: "1rem",
+                lineHeight: "2rem",
+            },
+
+            '& h2': {
+                fontSize: "1.25rem",
+                lineHeight: "2.5rem",
+            },
+
+            "& h1, & .header1": {
+                fontSize: "1.5rem",
+                lineHeight: "2.5rem",
+            },
+
+
+            '& .secondaryText': {
+                marginTop: '2rem'
+            },
+
+            '&.list, &.list2': {
+                marginTop: '2rem',
+                lineHeight: "2.5rem",
+
+                "& p": {
+                    lineHeight: "2.5rem !important",
+                },
+
+                '& h2': {
+                    lineHeight: "2.5rem",
+                },
+                "& h1, & .header1": {
+                    lineHeight: "2.5rem",
+                },
+            },
+
+            '&.list2, &.list3': {
+                width: '100% !important',
+                "& h1, & .header1": {
+                    fontSize: '2rem'
+                },
+            },
+
+            '&.list3': {
+                "& h1, & .header1": {
+                    width: '100%',
+                    fontSize: '1.5rem !important'
+                },
+                '& p': {
+                    fontSize: '1rem !important'
+                },
+
+                '& .headerContainer': {
+                    width: '100%'
+                }
+            }
+        },
+        ["@media (max-width: 600px)"]: {
+            '& .secondaryText': {
+                // marginTop: '2rem'
+            },
+
+            '&.list, &.list2': {
+                // marginTop: '2rem',
+                // lineHeight: "2.5rem",
+
+                "& p": {
+                    fontSize: '1rem'
+                },
+
+                '& h2': {
+                    lineHeight: "2rem",
+                },
+                "& h1, & .header1": {
+                    lineHeight: "2rem",
+                },
+            },
+
+            '&.list2, &.list3': {
+                width: '100% !important',
+                "& h1, & .header1": {
+                    fontSize: '1.25rem'
+                },
+            },
+
+            '&.list3': {
+                "& h1, & .header1": {
+                    fontSize: '1.25rem !important'
+                },
+                '& p': {
+                    fontSize: '1rem !important'
+                }
+            }
+        },
     },
     textlist: {
         display: 'flex',
@@ -58,7 +158,7 @@ const useStyles = makeStyles({
         color: '#FFF',
         fontWeight: '300',
         lineHeight: '2rem',
-        paddingRight: '5rem',
+        // paddingRight: '5rem',
 
         '& ul': {
             lineHeight: '2rem',
@@ -101,7 +201,7 @@ const AboutPageRenderer = () => {
                 aboutPageInfo.length < 1
                     ? <h1>Loading...</h1>
                     : (<>
-                            <Box bgcolor="#1F1F23" pt='8rem' pl={'3rem'}>
+                            <Box bgcolor="#1F1F23" pt='8rem' pl={'3rem'} pr={'3rem'} className={classes.root}>
                                 <Box className={classes.heroSection}>
                                     <p>
                                         <span className={`header1`}>
@@ -109,7 +209,7 @@ const AboutPageRenderer = () => {
                                         </span>
                                         {aboutPageInfo.mainSection.text1}
                                     </p>
-                                    <Box mt={'5rem'}>
+                                    <Box mt={'5rem'} className={'secondaryText'}>
                                         <p style={{fontStyle: 'italic'}}>{aboutPageInfo.mainSection.text2}</p>
                                     </Box>
                                 </Box>
@@ -129,7 +229,7 @@ const AboutPageRenderer = () => {
                                 </Box>
                                 <Box pt='3rem'>
                                     <Box className={`${classes.heroSection} list3`}>
-                                        <Box width='80%'>
+                                        <Box width='80%' className={`headerContainer`}>
                                             <h1>
                                                 {aboutPageInfo.thirdSection.header}
                                             </h1>

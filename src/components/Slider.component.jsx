@@ -9,7 +9,6 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import React from "react";
-import SliderCardMain from "./SliderCardMain.component";
 import SliderCard from "./SliderCard.component";
 
 // install Swiper components
@@ -29,8 +28,17 @@ const useStyles = makeStyles({
             // paddingRight: '2rem',
         },
 
+        '&.multiple': {
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            '& .swiper-button-next, & .swiper-button-prev ': {
+                paddingLeft: '2.5%',
+                paddingRight: '2.5%',
+            }
+        },
+
         '& .swiper-wrapper': {
-            paddingRight: '5rem',
+            // paddingRight: '5rem',
             // marginRight: '5rem',
         }
     }
@@ -40,29 +48,42 @@ const SliderComponent = ({perSlideView = 3, data = [], soloComponent = false}) =
     const classes = useStyles();
     return (
         <Swiper
-            className={classes.swiperMain}
+            className={`${classes.swiperMain} ${perSlideView > 1 ? 'multiple' : ''}`}
             spaceBetween={50}
             slidesPerView={perSlideView}
             navigation
             loop={true}
             pagination={{clickable: true}}
             scrollbar={{draggable: true}}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log("slide change")}
+            breakpoints={{
+                1: {
+                    slidesPerView: 1,
+                    spaceBetweenSlides: 30
+                },
+                // when window width is <= 499px
+                600: {
+                    slidesPerView: 2,
+                    spaceBetweenSlides: 30
+                },
+                820: {
+                    slidesPerView: 3,
+                },
+                // when window width is <= 999px
+                900: {
+                    slidesPerView: 4,
+                    spaceBetweenSlides: 40
+                },
+
+            }}
         >
             {
-                (data.soloComponent)
-                    ? (
-                        <SwiperSlide><SliderCardMain data={data}/></SwiperSlide>
-                    ) : (
-                        <>
-                            {
-                                data.map(el => (
-                                    <SwiperSlide><SliderCard text={el.header} imageUrl={el.imageUrl}/></SwiperSlide>
-                                ))
-                            }
-                        </>
-                    )
+                <>
+                    {
+                        data.map(el => (
+                            <SwiperSlide><SliderCard text={el.header} imageUrl={el.imageUrl}/></SwiperSlide>
+                        ))
+                    }
+                </>
             }
             {/*<SwiperSlide><SliderCardMain/></SwiperSlide>*/}
             {/*<SwiperSlide>Slide 3</SwiperSlide>*/}

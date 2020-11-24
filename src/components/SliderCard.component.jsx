@@ -13,6 +13,7 @@ const useStyles = makeStyles({
         lineHeight: '1.5rem',
     },
     imageHeader: {
+        textAlign: 'center',
         '& h1': {
             padding: 0,
             margin: 0,
@@ -26,10 +27,11 @@ const SliderCard = ({text, imageUrl}) => {
 
     return (
         <>
-            <Box mb='2rem' bgcolor='#FFF' display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-               <Box>
-                   <img style={{height: '200px', width: '340px'}} src={imageUrl} alt=""/>
-               </Box>
+            <Box mb='2rem' bgcolor='#FFF' display='flex' flexDirection='column' justifyContent='center'
+                 alignItems='center'>
+                <Box>
+                    <img style={{maxWidth: '100%'}} src={imageUrl} alt=""/>
+                </Box>
                 <Box className={classes.imageHeader}>
                     <h1>{text}</h1>
                 </Box>
