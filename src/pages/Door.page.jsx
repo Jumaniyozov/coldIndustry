@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
+import uuid from 'react-uuid';
+import {AnimatePresence, motion} from "framer-motion";
 
 // Icons
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -167,6 +168,11 @@ const useStyles = makeStyles({
         lineHeight: '2rem',
         paddingLeft: '2rem',
 
+        '&.doorimage': {
+            height: '600px',
+            alignItems: 'center',
+        },
+
         '& a': {
             color: '#FFF',
             textDecoration: 'none',
@@ -180,7 +186,11 @@ const useStyles = makeStyles({
 
             '& p': {
                 fontSize: '1.25rem'
-            }
+            },
+
+            '&.doorimage': {
+                height: '500px',
+            },
         },
         ["@media (max-width: 1080px)"]: {
             fontSize: '1rem',
@@ -191,7 +201,10 @@ const useStyles = makeStyles({
 
             '&.doorimage': {
                 padding: 0,
-                justifyContent: 'center'
+                justifyContent: 'center',
+                '&.doorimage': {
+                    height: '400px',
+                },
             }
         },
         ["@media (max-width: 880px)"]: {
@@ -429,6 +442,11 @@ const useStyles = makeStyles({
     }
 });
 
+const variants = {
+    hidden: {opacity: 0},
+    visible: {opacity: 1}
+}
+
 const DoorPage = () => {
     const classes = useStyles();
     const {doorPageInfo, fetchDoorPage} = useContext(GlobalContext);
@@ -514,13 +532,18 @@ const DoorPage = () => {
                                 </Box>
                                 <Box width='75%' display='flex' alignItems='center'
                                      justifyContent='center' className={classes.textlist}>
-                                    <Box>
+                                    <motion.div
+                                        variants={variants}
+                                        initial='hidden'
+                                        animate='visible'
+                                        key={uuid()}
+                                    >
                                         {Array.isArray(doorPageInfo.subMenu.options[subText].text)
                                             ? (doorPageInfo.subMenu.options[subText].text.map(par =>
                                                 <p key={par}>{par}</p>))
                                             : <p>{doorPageInfo.subMenu.options[subText].text}</p>
                                         }
-                                    </Box>
+                                    </motion.div>
                                 </Box>
                             </Box>
                         </Box>
@@ -565,7 +588,7 @@ const DoorPage = () => {
                                     <hr className={classes.hr}/>
                                 </Box>
                             </Box>
-                            <Box className={classes.doorStyleItemsContainer} display='flex'>
+                            <Box  className={classes.doorStyleItemsContainer} display='flex'>
                                 <Box width='50%'>
                                     <ul className={`${classes.optionlist} doorlist`}>
                                         {doorPageInfo.doorlist.map((sb, index) => (
@@ -577,15 +600,22 @@ const DoorPage = () => {
                                         ))}
                                     </ul>
                                 </Box>
-                                <Box width='50%' className={`${classes.textlist} doorimage`} display='flex'
+                                <Box height={'100%'} width='50%' className={`${classes.textlist} doorimage`} display='flex'
                                      alignItems='center'
                                      justifyContent='center'>
-                                    <img src={doorPageInfo.doorlist[subDoor].imageUrl}
-                                         style={{width: '75%'}} alt=""/>
+                                    {/*<AnimatePresence>*/}
+                                        <motion.img
+                                            initial={{opacity: 0}}
+                                            animate={{opacity: 1}}
+                                            // exit={{opacity: 0}}
+                                            key={uuid()}
+                                            src={doorPageInfo.doorlist[subDoor].imageUrl}
+                                            style={{width: '75%'}} alt=""/>
+                                    {/*</AnimatePresence>*/}
                                 </Box>
                             </Box>
                         </Box>
-                        <Box width='80%' pl={'5.5rem'} pt={'3rem'} className={classes.subHeaderContainer}>
+                        <Box width='80%' pl={'5.5rem'} pt={'5rem'} className={classes.subHeaderContainer}>
                             <Box display='flex' justifyContent='space-between' className={classes.subHeader}>
                                 <h1>Варианты изготовления дверей</h1>
                             </Box>

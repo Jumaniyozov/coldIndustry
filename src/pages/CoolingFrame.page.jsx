@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import HomeShowCard from "../components/HomeShowCat.component";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Grid from "@material-ui/core/Grid";
+import uuid from 'react-uuid';
+import {motion} from 'framer-motion';
 
 import {GlobalContext} from "../context/Main.context";
 import {Link} from "react-router-dom";
@@ -347,6 +347,12 @@ const useStyles = makeStyles({
     }
 });
 
+
+const variants = {
+    hidden: {opacity: 0},
+    visible: {opacity: 1}
+}
+
 const FrameRenderer = () => {
     const classes = useStyles();
     const {coolingFramePageInfo, fetchCFPage} = useContext(GlobalContext);
@@ -415,13 +421,18 @@ const FrameRenderer = () => {
                                     </Box>
                                     <Box width='75%' display='flex' alignItems='center'
                                          justifyContent='center' className={classes.textlist}>
-                                        <Box>
+                                        <motion.div
+                                            variants={variants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            key={uuid()}
+                                        >
                                             {Array.isArray(coolingFramePageInfo.subMenu[subText].text)
                                                 ? (coolingFramePageInfo.subMenu[subText].text.map(par =>
                                                     <p>{par}</p>))
                                                 : <p>{coolingFramePageInfo.subMenu[subText].text}</p>
                                             }
-                                        </Box>
+                                        </motion.div>
                                     </Box>
                                 </Box>
                                 <Box className={classes.subMenuContainer}>

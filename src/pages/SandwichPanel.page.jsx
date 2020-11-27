@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
-import HomeShowCard from "../components/HomeShowCat.component";
 import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Grid from "@material-ui/core/Grid";
+import uuid from 'react-uuid';
 
 import Card from "@material-ui/core/Card";
 import {GlobalContext} from "../context/Main.context";
 import {Link} from "react-router-dom";
 import ButtonCstm from "../components/Button.component";
+import {AnimatePresence, motion} from "framer-motion";
 
 const useStyles = makeStyles({
     hr: {
@@ -208,10 +208,10 @@ const useStyles = makeStyles({
         },
 
         ["@media (max-width: 620px)"]: {
-           '& img': {
+            '& img': {
                 width: '480px !important',
-               height: '320px !important'
-           },
+                height: '320px !important'
+            },
             '& #inwidth1, #inwidth2': {
                 bottom: '1%',
             },
@@ -463,6 +463,12 @@ const useStyles = makeStyles({
     }
 });
 
+const variants = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+}
+
+
 const SandwichRenderer = ({history}) => {
     const classes = useStyles();
     const {sandwichPanelPageInfo, fetchSPPage} = useContext(GlobalContext);
@@ -475,7 +481,7 @@ const SandwichRenderer = ({history}) => {
         const currentClass = document.getElementsByClassName('subTextli');
 
         Array.from(currentClass).forEach(cc => cc.classList.remove('active'));
-        console.log(currentClass);
+        // console.log(currentClass);
         event.target.classList.add('active');
         setSubText(index);
     }
@@ -498,7 +504,7 @@ const SandwichRenderer = ({history}) => {
 
     useEffect(() => {
         fetchSPPage();
-    }, [sandwichPanelPageInfo, history])
+    }, [history])
 
     // varText
     // optionlist
@@ -550,11 +556,37 @@ const SandwichRenderer = ({history}) => {
                             <Box width='75%' display='flex' alignItems='center'
                                  justifyContent='center' className={classes.textlist}>
                                 <Box>
-                                    {Array.isArray(sandwichPanelPageInfo.subMenu[subText].text)
-                                        ? (sandwichPanelPageInfo.subMenu[subText].text.map(par =>
-                                            <p>{par}</p>))
-                                        : <p>{sandwichPanelPageInfo.subMenu[subText].text}</p>
-                                    }
+                                    {/*<AnimatePresence>*/}
+                                    {/*    <motion.div*/}
+                                    {/*        variants={variants}*/}
+                                    {/*        initial="hidden"*/}
+                                    {/*        animate="visible"*/}
+                                    {/*    >*/}
+                                            {Array.isArray(sandwichPanelPageInfo.subMenu[subText].text) ? (
+                                                <motion.div
+                                                    variants={variants}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    key={uuid()}
+                                                >
+                                                    {sandwichPanelPageInfo.subMenu[subText].text.map(
+                                                        (par, index) => (
+                                                            <motion.p>{par}</motion.p>
+                                                        )
+                                                    )}
+                                                </motion.div>
+                                            ) : (
+                                                <motion.p
+                                                    variants={variants}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    key={uuid()}
+                                                >
+                                                    {sandwichPanelPageInfo.subMenu[subText].text}
+                                                </motion.p>
+                                            )}
+                                        {/*</motion.div>*/}
+                                    {/*</AnimatePresence>*/}
                                 </Box>
                             </Box>
                         </Box>
@@ -574,43 +606,65 @@ const SandwichRenderer = ({history}) => {
                                 </Box>
                                 <hr className={classes.hr}/>
                             </Box>
-                            <Box display='flex' mt={'5rem'}>
-                                <Box width='70%' className={`${classes.textlist} sectionText`}>
-                                    <p>{sandwichPanelPageInfo.subOption[subOption].content.header1}</p>
-                                </Box>
-                                <Box className={classes.imageSide} width='30%' display='flex' alignItems='center'
-                                     justifyContent='center'>
-                                    <img style={{maxWidth: '100%'}}
-                                         src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl1}
-                                         alt="sandwich sub image1"/>
-                                </Box>
-                            </Box>
-                            <Box display='flex' mt={'5rem'}>
-                                <Box width='30%' display='flex' alignItems='center' justifyContent='center' mt={'2rem'}>
-                                    <img style={{maxWidth: '100%'}}
-                                         src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl2}
-                                         alt="sandwich sub image1"/>
-                                </Box>
-                                <Box width='70%' className={classes.textlist}>
-                                    <p>{sandwichPanelPageInfo.subOption[subOption].content.header2}</p>
-                                </Box>
-                            </Box>
-                            <Box display='flex' mt={'5rem'}>
-                                <Box width='70%' className={classes.textlist}>
-                                    <p>{sandwichPanelPageInfo.subOption[subOption].content.header3}</p>
-                                </Box>
-                                <Box width='30%' display='flex' alignItems='center' justifyContent='center'>
-                                    <img style={{maxWidth: '100%'}}
-                                         src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl3}
-                                         alt="sandwich sub image1"/>
-                                </Box>
-                            </Box>
+                            {/*<AnimatePresence>*/}
+                                <motion.div
+                                    variants={variants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    key={uuid()}
+                                >
+                                    <Box display='flex' mt={'5rem'}>
+                                        <Box width='70%' className={`${classes.textlist} sectionText`}>
+                                            <p
+                                            >
+                                                {sandwichPanelPageInfo.subOption[subOption].content.header1}
+                                            </p>
+                                        </Box>
+                                        <Box pl={'2rem'} className={classes.imageSide} width='30%'
+                                             display='flex'
+                                             alignItems='center'
+                                             justifyContent='center'>
+                                            <img
+                                                style={{maxWidth: '100%'}}
+                                                src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl1}
+                                                alt="sandwich sub image1"/>
+                                        </Box>
+                                    </Box>
+                                    <Box display='flex' mt={'5rem'}>
+                                        <Box pr={'2rem'} width='30%' display='flex' alignItems='center'
+                                             justifyContent='center' mt={'2rem'}>
+                                            <img
+                                                style={{maxWidth: '100%'}}
+                                                src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl2}
+                                                alt="sandwich sub image1"/>
+                                        </Box>
+                                        <Box width='70%' className={classes.textlist}>
+                                            <p
+                                            >{sandwichPanelPageInfo.subOption[subOption].content.header2}</p>
+                                        </Box>
+                                    </Box>
+                                    <Box display='flex' mt={'5rem'}>
+                                        <Box width='70%' className={classes.textlist}>
+                                            <p
+                                                // key={uuid()}
+                                            >{sandwichPanelPageInfo.subOption[subOption].content.header3}</p>
+                                        </Box>
+                                        <Box pl={'2rem'} width='30%' display='flex' alignItems='center'
+                                             justifyContent='center'>
+                                            <img
+                                                style={{maxWidth: '100%'}}
+                                                src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl3}
+                                                alt="sandwich sub image1"/>
+                                        </Box>
+                                    </Box>
+                                </motion.div>
+                            {/*</AnimatePresence>*/}
                         </Box>
                         <Box className={`${classes.subMenuContainer} toMd`}>
                             <h1>{sandwichPanelPageInfo.subOptionMd.header}</h1>
                             <ul>
                                 {sandwichPanelPageInfo.subOptionMd.text.map((el, index) => (
-                                    <li key={index}>{el}</li>
+                                    <li key={uuid()}>{el}</li>
                                 ))
                                 }
                             </ul>
@@ -624,35 +678,62 @@ const SandwichRenderer = ({history}) => {
 
                         <Box display='flex' mt={'5rem'} className={classes.calcContainer}>
                             <Box display='flex' alignItems='center' justifyContent='center'>
-                                <Box className={classes.calcsection}>
-                                    <img style={{height: '400px', width: '600px'}}
-                                         src={sandwichPanelPageInfo.calcRoof[subRoof].imageUrl}
-                                         alt="sandwich sub image1"/>
-                                    {/*subRoof*/}
-                                    {subRoof === 0 &&
-                                    <Box>
-                                        <input type="number" id='inlength1'/>
-                                        <input type="number" id='inheight1'/>
-                                        <input type="number" id='inheightk1'/>
-                                        <input type="number" id='inwidth1'/>
-                                    </Box>
-                                    }
-                                    {subRoof === 1 &&
-                                    <Box>
-                                        <input type="number" id='inlength2'/>
-                                        <input type="number" id='inheight2'/>
-                                        <input type="number" id='inheightk2'/>
-                                        <input type="numbers" id='inwidth2'/>
-                                    </Box>
-                                    }
-                                    {subRoof === 2 &&
-                                    <Box>
-                                        <input type="number" id='inlength3'/>
-                                        <input type="number" id='inheight3'/>
-                                        <input type="numbers" id='inwidth3'/>
-                                    </Box>
-                                    }
-                                </Box>
+                                {/*<AnimatePresence>*/}
+                                    <motion.div className={classes.calcsection}
+                                                variants={variants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                key={uuid()}
+                                    >
+                                        <img
+                                            // initial={{opacity: 0}}
+                                            // animate={{opacity: 1}}
+                                            // exit={{opacity: 0}}
+                                            // key={uuid()}
+                                            style={{height: '400px', width: '600px'}}
+                                            src={sandwichPanelPageInfo.calcRoof[subRoof].imageUrl}
+                                            alt="sandwich sub image1"/>
+                                        {/*subRoof*/}
+                                        {subRoof === 0 &&
+                                        <div
+                                            // initial={{opacity: 0}}
+                                            // animate={{opacity: 1}}
+                                            // exit={{opacity: 0}}
+                                            // key={uuid()}
+                                        >
+                                            <input type="number" id='inlength1'/>
+                                            <input type="number" id='inheight1'/>
+                                            <input type="number" id='inheightk1'/>
+                                            <input type="number" id='inwidth1'/>
+                                        </div>
+                                        }
+                                        {subRoof === 1 &&
+                                        <div
+                                            // initial={{opacity: 0}}
+                                            // animate={{opacity: 1}}
+                                            // exit={{opacity: 0}}
+                                            // key={uuid()}
+                                        >
+                                            <input type="number" id='inlength2'/>
+                                            <input type="number" id='inheight2'/>
+                                            <input type="number" id='inheightk2'/>
+                                            <input type="numbers" id='inwidth2'/>
+                                        </div>
+                                        }
+                                        {subRoof === 2 &&
+                                        <div
+                                            // initial={{opacity: 0}}
+                                            //         animate={{opacity: 1}}
+                                            //         exit={{opacity: 0}}
+                                            //         key={uuid()}
+                                        >
+                                            <input type="number" id='inlength3'/>
+                                            <input type="number" id='inheight3'/>
+                                            <input type="numbers" id='inwidth3'/>
+                                        </div>
+                                        }
+                                    </motion.div>
+                                {/*</AnimatePresence>*/}
                             </Box>
                             <Box
                                 display='flex'
@@ -681,9 +762,14 @@ const SandwichRenderer = ({history}) => {
                                             {
                                                 sandwichPanelPageInfo.calcRoof[subRoof].header
                                                     ? (
-                                                        <Box>
+                                                        <motion.div
+                                                            variants={variants}
+                                                            initial="hidden"
+                                                            animate="visible"
+                                                            key={uuid()}
+                                                        >
                                                             <p>{sandwichPanelPageInfo.calcRoof[subRoof].header}</p>
-                                                        </Box>
+                                                        </motion.div>
                                                     )
                                                     : ''
                                             }
