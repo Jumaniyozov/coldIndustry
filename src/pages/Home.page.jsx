@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         margin: 0,
         overflow: 'hidden',
         gridTemplateColumns: 'repeat(5, 1fr)',
-        gridColumnGap: '1rem',
+        gridAutoRows: "minmax(min-content, max-content)",
 
         '& h1': {
             margin: 0,
@@ -201,23 +201,27 @@ const HomePage = ({history}) => {
                                 <Box display="grid" width="100%" className={classes.textContainer}>
                                     <InfoText header={`${homePageInfo.cardInfo.h1.header}`}
                                               content={`${homePageInfo.cardInfo.h1.text}`}
+                                              linkTo={'/about'}
                                               side
                                     />
                                     <InfoText header={`${homePageInfo.cardInfo.h2.header}`}
                                               content={`${homePageInfo.cardInfo.h2.text}`}
+                                              linkTo={'/projecting'}
                                               side
                                     />
                                     <InfoText header={`${homePageInfo.cardInfo.h3.header}`}
                                               content={`${homePageInfo.cardInfo.h3.text}`}
+                                              linkTo={'/insertion'}
                                               side
                                     />
                                     <InfoText header={`${homePageInfo.cardInfo.h4.header}`}
                                               content={`${homePageInfo.cardInfo.h4.text}`}
+                                              linkTo={'/service'}
                                               side
                                     />
                                     <InfoText header={`${homePageInfo.cardInfo.h5.header}`}
                                               content={`${homePageInfo.cardInfo.h5.text}`}
-
+                                              linkTo={'/modernization'}
                                     />
                                 </Box>
                             </Box>

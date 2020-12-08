@@ -69,12 +69,51 @@ const useStyles = makeStyles({
     },
     times: {
         color: "#FFF",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
 
         '& h3': {
             padding: '.5rem 2rem',
             width: 'fit-content',
             background: "#EEB45E",
             borderRadius: ".5rem",
+        },
+
+        '& input': {
+            fontSize: '1.25rem',
+            padding: '.5rem 2rem',
+            width: 'fit-content',
+            background: "#EEB45E",
+            borderRadius: ".5rem",
+            border: 'none',
+            color: 'white',
+
+            "&::-webkit-calendar-picker-indicator": {
+                filter: "invert(1)"
+            },
+
+            '&:focus': {
+                outline: 'none'
+            }
+        },
+
+        '& select': {
+            fontSize: '1.25rem',
+            fontWeight: 'bold',
+            padding: '.5rem 2rem',
+            width: 'fit-content',
+            background: "#EEB45E",
+            borderRadius: ".5rem",
+            border: 'none',
+            color: 'white',
+            margin: 0,
+
+            "&:before, &:after": {
+                content: 'none'
+            }
+
         },
 
         '& p': {
@@ -86,6 +125,7 @@ const useStyles = makeStyles({
     },
     feedback: {
         backgroundColor: "#FFF",
+        cursor: 'pointer',
         borderRadius: '.5rem',
         padding: '1.5rem 2rem',
         '& h3': {
@@ -117,7 +157,7 @@ const useStyles = makeStyles({
             fontSize: '.85rem'
         },
 
-        ["@media (max-width:600px)"]: {
+        ["@media (max-width:620px)"]: {
             borderLeft: "none",
             borderTop: "solid 2px",
             paddingLeft: '0',
@@ -139,7 +179,7 @@ const useStyles = makeStyles({
         }
     },
     bottomTime: {
-        ["@media (max-width:1120px)"]: {
+        ["@media (max-width:1180px)"]: {
             flexDirection: 'column',
             alignItems: 'center',
 
@@ -155,7 +195,7 @@ const useStyles = makeStyles({
             alignItems: 'flex-start',
             justifyContent: 'center',
         },
-        ["@media (max-width:450px)"]: {
+        ["@media (max-width:620px)"]: {
             alignItems: 'center',
         }
     },
@@ -165,7 +205,7 @@ const useStyles = makeStyles({
             width: '90%'
         },
 
-        ["@media (max-width:600px)"]: {
+        ["@media (max-width:620px)"]: {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -185,12 +225,12 @@ const useStyles = makeStyles({
     footerConsult: {
         color: "white",
 
-        ["@media (max-width:600px)"]: {
+        ["@media (max-width:620px)"]: {
             paddingTop: '1rem'
         }
     },
     formItems: {
-        ["@media (max-width:600px)"]: {
+        ["@media (max-width:620px)"]: {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -202,14 +242,14 @@ const useStyles = makeStyles({
         }
     },
     footerContainer: {
-        ["@media (max-width:600px)"]: {
+        ["@media (max-width:620px)"]: {
             paddingLeft: 0
         }
     },
     footerItems: {
-        ["@media (max-width:600px)"]: {
+        ["@media (max-width:620px)"]: {
             flexDirection: 'column',
-            alignItems: 'flex-start',
+            alignItems: 'center',
 
             '& div': {
                 paddingLeft: 0,
@@ -233,7 +273,7 @@ const useStyles = makeStyles({
         }
     },
     footerItems2: {
-        ["@media (max-width:600px)"]: {
+        ["@media (max-width:620px)"]: {
             flexDirection: 'column',
             alignItems: 'center',
 
@@ -259,6 +299,13 @@ const Footer = () => {
 
     const inputHandler = (e) => {
         setInputValues({...inputValues, [e.target.name]: e.target.value})
+    }
+
+    const handleSubmit = (e) => {
+        setInputValues({name: '', number: ''});
+        document.getElementById('visitHours').value = ''
+        document.getElementById('visitTimes').value = ''
+        document.getElementById('visitDate').value = ''
     }
 
     return (
@@ -321,8 +368,8 @@ const Footer = () => {
                                     <Box width="50%">
                                         <h2>Номер телефона</h2>
                                         <TextField className={classes.textfield}
-                                                   id="phone" name='phone'
-                                                   label="Номер телфона" value={inputValues.phone}
+                                                   id="number" name='number'
+                                                   label="Номер телфона" value={inputValues.number}
                                                    onChange={inputHandler}/>
                                     </Box>
                                 </Box>
@@ -332,17 +379,26 @@ const Footer = () => {
                             <Box width="50%">
                                 <Box className={classes.footerTime}>
                                     <h2>Удобное время</h2>
-                                    <Box display="flex" justifyContent='flex-start' className={`${classes.footerItems} timers`}>
+                                    <Box display="flex" justifyContent='flex-start'
+                                         className={`${classes.footerItems} timers`}>
                                         <Box className={classes.times}>
-                                            <h3>10</h3>
+                                            <select name="hour" id="visitHours">
+                                                {[...Array(24).keys()].map(el => (
+                                                    <option value={`${el}`}>{el}</option>
+                                                ))}
+                                            </select>
                                             <p>Часы</p>
                                         </Box>
                                         <Box pl={'2rem'} className={classes.times}>
-                                            <h3>00</h3>
+                                            <select name="hour" id="visitTimes">
+                                                {[...Array(60).keys()].map(el => (
+                                                    <option value={`${el}`}>{el}</option>
+                                                ))}
+                                            </select>
                                             <p>Минуты</p>
                                         </Box>
                                         <Box pl={'2rem'} className={classes.times}>
-                                            <h3>3 сентября, 2020</h3>
+                                            <input type="date" id="visitDate" name="visitDate"/>
                                             <p>Дата Посещения</p>
                                         </Box>
                                     </Box>
@@ -352,7 +408,7 @@ const Footer = () => {
                                 <Box display="flex" height="100%" justifyContent="flex-start" alignItems="center"
                                      className={classes.footerItems2}>
                                     <Box mt={'.5rem'} width='50%'>
-                                        <Box className={classes.feedback}>
+                                        <Box className={classes.feedback} onClick={handleSubmit}>
                                             <h3>Обратный звонок</h3>
                                         </Box>
                                     </Box>

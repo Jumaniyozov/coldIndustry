@@ -425,6 +425,7 @@ const FrameRenderer = () => {
                                             variants={variants}
                                             initial="hidden"
                                             animate="visible"
+                                            transition={{duration: .6}}
                                             key={uuid()}
                                         >
                                             {Array.isArray(coolingFramePageInfo.subMenu[subText].text)
@@ -562,7 +563,7 @@ const FrameRenderer = () => {
                                             alt=""/>
                                     </Box>
                                 </Box>
-                                <Box className={classes.preGallery} width='100%' pl={'7.5%'} pt={'8rem'}
+                                <Box className={classes.preGallery} width='inherit' pl={'7.5%'} pt={'8rem'}
                                      bgcolor="#1F1F23">
                                     <Box display='flex' justifyContent='space-between'
                                          className={classes.subHeader}>

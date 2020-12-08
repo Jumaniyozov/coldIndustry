@@ -120,7 +120,7 @@ const SliderCardMain = ({data}) => {
                         </Box>
                         <Box>
                         </Box>
-                        <Box pr={'2rem'} width='50%' className={classes.textlist} display='flex'
+                        <Box pl={'2rem'} pr={'2rem'} width='50%' className={classes.textlist} display='flex'
                              alignItems='center'>
                             <p>{data.text}</p>
                         </Box>

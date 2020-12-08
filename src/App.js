@@ -11,12 +11,18 @@ import AboutPage from "./pages/About.page";
 import Header from "./components/Header.component";
 import Footer from "./components/Footer.component";
 import {GlobalProvider} from "./context/Main.context";
+import ScrollToTop from "./components/ScrolllToTop.component";
+import ProjectingPageRenderer from "./pages/Projecting.page";
+import InsertionPageRenderer from "./pages/Insertion.page";
+import ServicePageRenderer from "./pages/Service.page";
+import ModernizationPageRenderer from "./pages/Modernization.page";
 
 
 function App() {
     return (
         <>
             <BrowserRouter>
+                <ScrollToTop/>
                 <GlobalProvider>
                     <Header/>
                     <Switch>
@@ -27,6 +33,11 @@ function App() {
                         <Route path='/doors' component={DoorPage}/>
                         <Route path='/penoplasts' component={PenoplastPage}/>
                         <Route path='/about' component={AboutPage}/>
+                        <Route path='/projecting' component={ProjectingPageRenderer}/>
+                        <Route path='/insertion' component={InsertionPageRenderer}/>
+                        <Route path='/service' component={ServicePageRenderer}/>
+                        <Route path='/modernization' component={ModernizationPageRenderer}/>
+                        <Route path='*' component={HomePage}/>
                     </Switch>
                     <Footer/>
                 </GlobalProvider>

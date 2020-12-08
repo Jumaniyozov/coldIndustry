@@ -2,9 +2,9 @@ import {
     ABOUT_PAGE_FETCH,
     CE_PAGE_FETCH,
     CF_PAGE_FETCH,
-    DOOR_PAGE_FETCH, FETCH_START, FETCH_SUCCESS,
-    HOME_PAGE_FETCH,
-    PENOPLAST_PAGE_FETCH,
+    DOOR_PAGE_FETCH, FETCH_START,
+    HOME_PAGE_FETCH, INSERTION_PAGE_FETCH, MODERNIZATION_PAGE_FETCH,
+    PENOPLAST_PAGE_FETCH, PROJECTING_PAGE_FETCH, SERVICE_PAGE_FETCH,
     SP_PAGE_FETCH
 } from "./types";
 
@@ -63,6 +63,34 @@ export default (state, action) => {
                 ...state,
                 loading: false,
                 aboutPageInfo: action.payload
+            }
+        }
+        case PROJECTING_PAGE_FETCH: {
+            return {
+                ...state,
+                loading: false,
+                projectingPageInfo: action.payload
+            }
+        }
+        case INSERTION_PAGE_FETCH: {
+            return {
+                ...state,
+                loading: false,
+                insertionPageInfo: action.payload
+            }
+        }
+        case SERVICE_PAGE_FETCH: {
+            return {
+                ...state,
+                loading: false,
+                servicePageInfo: action.payload
+            }
+        }
+        case MODERNIZATION_PAGE_FETCH: {
+            return {
+                ...state,
+                loading: false,
+                modernizationPageInfo: action.payload
             }
         }
 

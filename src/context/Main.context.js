@@ -8,13 +8,19 @@ import {
     DoorInfo,
     CoolingFrameInfo,
     HomePageInfo,
+    ProejctingPageInfo, InsertionPageInfo, ServicePageInfo, ModernizationPageInfo
 } from '../data/InfoText.json';
 import {
     ABOUT_PAGE_FETCH,
     CE_PAGE_FETCH,
     CF_PAGE_FETCH,
     DOOR_PAGE_FETCH,
-    HOME_PAGE_FETCH, PENOPLAST_PAGE_FETCH,
+    HOME_PAGE_FETCH,
+    INSERTION_PAGE_FETCH,
+    MODERNIZATION_PAGE_FETCH,
+    PENOPLAST_PAGE_FETCH,
+    PROJECTING_PAGE_FETCH,
+    SERVICE_PAGE_FETCH,
     SP_PAGE_FETCH
 } from "./types";
 
@@ -28,6 +34,10 @@ const initialState = {
     doorPageInfo: [],
     penoplastPageInfo: [],
     sandwichPanelPageInfo: [],
+    projectingPageInfo: [],
+    insertionPageInfo: [],
+    servicePageInfo: [],
+    modernizationPageInfo: [],
     error: null
 };
 
@@ -116,6 +126,50 @@ export const GlobalProvider = props => {
         }
     }
 
+    const fetchProjectingPage = async () => {
+        try {
+            await dispatch({
+                type: PROJECTING_PAGE_FETCH,
+                payload: ProejctingPageInfo
+            })
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const fetchInsertionPage = async () => {
+        try {
+            await dispatch({
+                type: INSERTION_PAGE_FETCH,
+                payload: InsertionPageInfo
+            })
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const fetchServicePage = async () => {
+        try {
+            await dispatch({
+                type: SERVICE_PAGE_FETCH,
+                payload: ServicePageInfo
+            })
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const fetchModernizationPage = async () => {
+        try {
+            await dispatch({
+                type: MODERNIZATION_PAGE_FETCH,
+                payload: ModernizationPageInfo
+            })
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     const valuesForProvider = {
         //state
         loading: state.loading,
@@ -126,16 +180,26 @@ export const GlobalProvider = props => {
         homePageInfo: state.homePageInfo,
         penoplastPageInfo: state.penoplastPageInfo,
         sandwichPanelPageInfo: state.sandwichPanelPageInfo,
+        projectingPageInfo: state.projectingPageInfo,
+        insertionPageInfo: state.insertionPageInfo,
+        servicePageInfo: state.servicePageInfo,
+        modernizationPageInfo: state.modernizationPageInfo,
+
         error: state.error,
+
+        //actions
+
         fetchHomePage,
         fetchSPPage,
         fetchCEPage,
         fetchCFPage,
         fetchDoorPage,
         fetchPenoPage,
-        fetchAboutPage
-
-        //actions
+        fetchAboutPage,
+        fetchProjectingPage,
+        fetchInsertionPage,
+        fetchServicePage,
+        fetchModernizationPage
     }
 
     return (

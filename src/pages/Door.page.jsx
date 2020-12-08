@@ -9,6 +9,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import {GlobalContext} from "../context/Main.context";
 import {Link} from "react-router-dom";
 import ButtonCstm from "../components/Button.component";
+import _ from 'lodash';
 
 const useStyles = makeStyles({
     hr: {
@@ -263,7 +264,7 @@ const useStyles = makeStyles({
         gridGap: '1rem',
 
         '& img': {
-            objectFit: 'fit',
+            objectFit: 'fill',
             width: '100%',
             height: '100%'
         },
@@ -302,7 +303,27 @@ const useStyles = makeStyles({
             display: 'none'
         },
     },
+    paginationNav: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 0,
+
+        '& li': {
+
+            '&.active': {
+                '-webkitBackgroundClip': 'text',
+                backgroundClip: 'text',
+                color: 'transparent',
+                background: 'linear-gradient(to right, #D38716 , #D6B600)',
+            },
+            listStyle: 'none',
+            margin: 0,
+            padding: "0 .5rem ",
+        }
+    },
     nextIcon: {
+        cursor: 'pointer',
         fontSize: '2rem',
         fill: '#D6B600',
 
@@ -449,11 +470,22 @@ const variants = {
 
 const DoorPage = () => {
     const classes = useStyles();
-    const {doorPageInfo, fetchDoorPage} = useContext(GlobalContext);
 
+    const [doorPage, setDoorPage] = useState(1);
     const [subText, setSubText] = useState(0);
     const [subDoor, setSubDoor] = useState(0);
+    const [doorList, setDoorList] = useState([]);
+    const [maxPages, setMaxPages] = useState(0);
 
+    const {doorPageInfo, fetchDoorPage} = useContext(GlobalContext);
+    const {doorGallery} = doorPageInfo;
+
+
+    function updateDoorPage(gallery) {
+        const indexOfLastImage = (doorPage) * 9;
+        const indexOfFirstImage = indexOfLastImage - 9;
+        return gallery.slice(indexOfFirstImage, indexOfLastImage);
+    }
 
     const handleSubText = (event, index) => {
         const currentClass = document.getElementsByClassName('subTextcf');
@@ -472,8 +504,20 @@ const DoorPage = () => {
     }
 
     useEffect(() => {
-        fetchDoorPage()
-    }, [doorPageInfo])
+        if (!_.isEmpty(doorGallery)) {
+            const currentDoors = updateDoorPage(doorGallery);
+            setDoorList(currentDoors)
+        }
+    }, [doorPage])
+
+    useEffect(() => {
+        fetchDoorPage();
+        if (!_.isEmpty(doorGallery)) {
+            const currentDoors = updateDoorPage(doorGallery);
+            setDoorList(currentDoors)
+            setMaxPages(Math.ceil(doorGallery.length / 9));
+        }
+    }, [doorPageInfo, doorGallery])
 
     return (
         <>
@@ -536,6 +580,7 @@ const DoorPage = () => {
                                         variants={variants}
                                         initial='hidden'
                                         animate='visible'
+                                        transition={{duration: .5}}
                                         key={uuid()}
                                     >
                                         {Array.isArray(doorPageInfo.subMenu.options[subText].text)
@@ -548,35 +593,47 @@ const DoorPage = () => {
                             </Box>
                         </Box>
                         <Box width='100%' mt='8rem' className={classes.gallerySectionContainer}>
+                            <motion.div
+                                variants={variants}
+                                initial='hidden'
+                                animate='visible'
+                                transition={{duration: .5}}
+                                key={uuid()}
+                            >
                             <Box
                                 className={classes.galleryContainer}
                             >
-                                {
-                                    doorPageInfo.doorGallery.map(i => (
-                                        Array.isArray(i)
-                                            ? (
-                                                <Box height='100%' display='flex' flexDirection='column'
-                                                     className={classes.dividegallery}>
-                                                    {i.map(el => (
-                                                        <img src={el}
-                                                             alt="sandwich sub image1"/>
-                                                    ))}
-                                                </Box>
-                                            ) : (
-                                                <img src={i}
-                                                     alt=""/>
-                                            )
-                                    ))
-                                }
-
+                                    {
+                                        doorList.map(i => (
+                                            Array.isArray(i)
+                                                ? (
+                                                    <Box height='100%' display='flex' flexDirection='column'
+                                                         className={classes.dividegallery}>
+                                                        {i.map(el => (
+                                                            <img src={el}
+                                                                 alt="sandwich sub image1"/>
+                                                        ))}
+                                                    </Box>
+                                                ) : (
+                                                    <img src={i}
+                                                         alt=""/>
+                                                )
+                                        ))
+                                    }
                             </Box>
+                                </motion.div>
                             <Box className={classes.paginationText} pr={'8rem'}>
                                 <p>Страница</p>
-                                <p><PlayArrowIcon className={`${classes.nextIcon} reverse`}/></p>
-                                <p>1</p>
-                                <p>2</p>
-                                <p>3</p>
-                                <p><PlayArrowIcon className={`${classes.nextIcon} `}/></p>
+                                <Box display='flex' alignItems='center' justifyContent='space-between'>
+                                    <PlayArrowIcon className={`${classes.nextIcon} reverse`}
+                                                   onClick={() => setDoorPage(prevCount => prevCount !== 1 ? prevCount - 1 : 1)}/>
+                                    <ul className={classes.paginationNav}>
+                                        {[...Array(maxPages).keys()].map(el => <li
+                                            className={`${el + 1 === doorPage ? 'active' : ''}`}>{el + 1}</li>)}
+                                    </ul>
+                                    <PlayArrowIcon className={`${classes.nextIcon} `}
+                                                   onClick={() => setDoorPage(prevCount => prevCount < maxPages ? prevCount + 1 : maxPages)}/>
+                                </Box>
                             </Box>
                         </Box>
                         <Box className={classes.doorStyles}>
@@ -588,7 +645,7 @@ const DoorPage = () => {
                                     <hr className={classes.hr}/>
                                 </Box>
                             </Box>
-                            <Box  className={classes.doorStyleItemsContainer} display='flex'>
+                            <Box className={classes.doorStyleItemsContainer} display='flex'>
                                 <Box width='50%'>
                                     <ul className={`${classes.optionlist} doorlist`}>
                                         {doorPageInfo.doorlist.map((sb, index) => (
@@ -600,17 +657,18 @@ const DoorPage = () => {
                                         ))}
                                     </ul>
                                 </Box>
-                                <Box height={'100%'} width='50%' className={`${classes.textlist} doorimage`} display='flex'
+                                <Box height={'100%'} width='50%' className={`${classes.textlist} doorimage`}
+                                     display='flex'
                                      alignItems='center'
                                      justifyContent='center'>
                                     {/*<AnimatePresence>*/}
-                                        <motion.img
-                                            initial={{opacity: 0}}
-                                            animate={{opacity: 1}}
-                                            // exit={{opacity: 0}}
-                                            key={uuid()}
-                                            src={doorPageInfo.doorlist[subDoor].imageUrl}
-                                            style={{width: '75%'}} alt=""/>
+                                    <motion.img
+                                        initial={{opacity: 0}}
+                                        animate={{opacity: 1}}
+                                        transition={{duration: .8}}
+                                        key={uuid()}
+                                        src={doorPageInfo.doorlist[subDoor].imageUrl}
+                                        style={{width: '75%'}} alt=""/>
                                     {/*</AnimatePresence>*/}
                                 </Box>
                             </Box>
@@ -659,12 +717,14 @@ const DoorPage = () => {
 }
 
 
-const DoorPageRendered = () => {
+const DoorPageRendered = () =>
+{
     return (
         <div>
             <DoorPage/>
         </div>
     );
-};
+}
+;
 
 export default DoorPageRendered;

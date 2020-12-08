@@ -464,8 +464,8 @@ const useStyles = makeStyles({
 });
 
 const variants = {
-    visible: { opacity: 1 },
-    hidden: { opacity: 0 },
+    visible: {opacity: 1},
+    hidden: {opacity: 0},
 }
 
 
@@ -473,6 +473,23 @@ const SandwichRenderer = ({history}) => {
     const classes = useStyles();
     const {sandwichPanelPageInfo, fetchSPPage} = useContext(GlobalContext);
 
+    const [inputValues, setInputValues] = useState(
+        {
+            inlength1: '',
+            inheight1: '',
+            inheightk1: '',
+            inwidth1: '',
+            inlength2: '',
+            inheight2: '',
+            inheightk2: '',
+            inwidth2: '',
+            inlength3: '',
+            inheight3: '',
+            inwidth3: '',
+        });
+
+    const [area, setArea] = useState(0);
+    const [crowl, setCrowl] = useState(0);
     const [subText, setSubText] = useState(0);
     const [subOption, setSubOption] = useState(0);
     const [subRoof, setSubRoof] = useState(0);
@@ -500,7 +517,37 @@ const SandwichRenderer = ({history}) => {
         Array.from(currentClass).forEach(cc => cc.classList.remove('active'));
         event.target.classList.add('active');
         setSubRoof(index);
+        setArea(0)
+        setCrowl(0)
     }
+
+
+    const inputHandler = (e) => {
+        setInputValues({...inputValues, [e.target.name]: e.target.value})
+    }
+
+
+    useEffect(() => {
+        // setArea((inputValues ))
+        // setCrowl()
+        if (subRoof === 0) {
+            const rb = inputValues.inheight1 - inputValues.inheightk1;
+            const c = Math.sqrt(Math.pow(inputValues.inwidth1 / 2, 2) + Math.pow(rb, 2))
+            const s = (c * inputValues.inlength1) * 2;
+            setCrowl(s.toFixed(2));
+            setArea((inputValues.inwidth1 * inputValues.inlength1).toFixed(2));
+        } else if (subRoof === 1) {
+            const rb = inputValues.inheight2 - inputValues.inheightk2;
+            const c = Math.sqrt(Math.pow(inputValues.inwidth2, 2) + Math.pow(rb, 2))
+            const s = c * inputValues.inlength2;
+            setCrowl(s.toFixed(2));
+            setArea((inputValues.inwidth2 * inputValues.inlength2).toFixed(2));
+        } else if (subRoof === 2) {
+            setCrowl(0);
+            setArea((inputValues.inwidth3 * inputValues.inlength3).toFixed(2));
+        }
+
+    }, [inputValues, subRoof])
 
     useEffect(() => {
         fetchSPPage();
@@ -556,36 +603,32 @@ const SandwichRenderer = ({history}) => {
                             <Box width='75%' display='flex' alignItems='center'
                                  justifyContent='center' className={classes.textlist}>
                                 <Box>
-                                    {/*<AnimatePresence>*/}
-                                    {/*    <motion.div*/}
-                                    {/*        variants={variants}*/}
-                                    {/*        initial="hidden"*/}
-                                    {/*        animate="visible"*/}
-                                    {/*    >*/}
-                                            {Array.isArray(sandwichPanelPageInfo.subMenu[subText].text) ? (
-                                                <motion.div
-                                                    variants={variants}
-                                                    initial="hidden"
-                                                    animate="visible"
-                                                    key={uuid()}
-                                                >
-                                                    {sandwichPanelPageInfo.subMenu[subText].text.map(
-                                                        (par, index) => (
-                                                            <motion.p>{par}</motion.p>
-                                                        )
-                                                    )}
-                                                </motion.div>
-                                            ) : (
-                                                <motion.p
-                                                    variants={variants}
-                                                    initial="hidden"
-                                                    animate="visible"
-                                                    key={uuid()}
-                                                >
-                                                    {sandwichPanelPageInfo.subMenu[subText].text}
-                                                </motion.p>
+                                    {Array.isArray(sandwichPanelPageInfo.subMenu[subText].text) ? (
+                                        <motion.div
+                                            variants={variants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            transition={{duration: .5}}
+                                            key={uuid()}
+                                        >
+                                            {sandwichPanelPageInfo.subMenu[subText].text.map(
+                                                (par, index) => (
+                                                    <motion.p>{par}</motion.p>
+                                                )
                                             )}
-                                        {/*</motion.div>*/}
+                                        </motion.div>
+                                    ) : (
+                                        <motion.p
+                                            variants={variants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            transition={{duration: .5}}
+                                            key={uuid()}
+                                        >
+                                            {sandwichPanelPageInfo.subMenu[subText].text}
+                                        </motion.p>
+                                    )}
+                                    {/*</motion.div>*/}
                                     {/*</AnimatePresence>*/}
                                 </Box>
                             </Box>
@@ -607,57 +650,58 @@ const SandwichRenderer = ({history}) => {
                                 <hr className={classes.hr}/>
                             </Box>
                             {/*<AnimatePresence>*/}
-                                <motion.div
-                                    variants={variants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    key={uuid()}
-                                >
-                                    <Box display='flex' mt={'5rem'}>
-                                        <Box width='70%' className={`${classes.textlist} sectionText`}>
-                                            <p
-                                            >
-                                                {sandwichPanelPageInfo.subOption[subOption].content.header1}
-                                            </p>
-                                        </Box>
-                                        <Box pl={'2rem'} className={classes.imageSide} width='30%'
-                                             display='flex'
-                                             alignItems='center'
-                                             justifyContent='center'>
-                                            <img
-                                                style={{maxWidth: '100%'}}
-                                                src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl1}
-                                                alt="sandwich sub image1"/>
-                                        </Box>
+                            <motion.div
+                                variants={variants}
+                                initial="hidden"
+                                animate="visible"
+                                transition={{duration: .5}}
+                                key={uuid()}
+                            >
+                                <Box display='flex' mt={'5rem'}>
+                                    <Box width='70%' className={`${classes.textlist} sectionText`}>
+                                        <p
+                                        >
+                                            {sandwichPanelPageInfo.subOption[subOption].content.header1}
+                                        </p>
                                     </Box>
-                                    <Box display='flex' mt={'5rem'}>
-                                        <Box pr={'2rem'} width='30%' display='flex' alignItems='center'
-                                             justifyContent='center' mt={'2rem'}>
-                                            <img
-                                                style={{maxWidth: '100%'}}
-                                                src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl2}
-                                                alt="sandwich sub image1"/>
-                                        </Box>
-                                        <Box width='70%' className={classes.textlist}>
-                                            <p
-                                            >{sandwichPanelPageInfo.subOption[subOption].content.header2}</p>
-                                        </Box>
+                                    <Box pl={'2rem'} className={classes.imageSide} width='30%'
+                                         display='flex'
+                                         alignItems='center'
+                                         justifyContent='center'>
+                                        <img
+                                            style={{maxWidth: '100%'}}
+                                            src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl1}
+                                            alt="sandwich sub image1"/>
                                     </Box>
-                                    <Box display='flex' mt={'5rem'}>
-                                        <Box width='70%' className={classes.textlist}>
-                                            <p
-                                                // key={uuid()}
-                                            >{sandwichPanelPageInfo.subOption[subOption].content.header3}</p>
-                                        </Box>
-                                        <Box pl={'2rem'} width='30%' display='flex' alignItems='center'
-                                             justifyContent='center'>
-                                            <img
-                                                style={{maxWidth: '100%'}}
-                                                src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl3}
-                                                alt="sandwich sub image1"/>
-                                        </Box>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Box pr={'2rem'} width='30%' display='flex' alignItems='center'
+                                         justifyContent='center' mt={'2rem'}>
+                                        <img
+                                            style={{maxWidth: '100%'}}
+                                            src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl2}
+                                            alt="sandwich sub image1"/>
                                     </Box>
-                                </motion.div>
+                                    <Box width='70%' className={classes.textlist}>
+                                        <p
+                                        >{sandwichPanelPageInfo.subOption[subOption].content.header2}</p>
+                                    </Box>
+                                </Box>
+                                <Box display='flex' mt={'5rem'}>
+                                    <Box width='70%' className={classes.textlist}>
+                                        <p
+                                            // key={uuid()}
+                                        >{sandwichPanelPageInfo.subOption[subOption].content.header3}</p>
+                                    </Box>
+                                    <Box pl={'2rem'} width='30%' display='flex' alignItems='center'
+                                         justifyContent='center'>
+                                        <img
+                                            style={{maxWidth: '100%'}}
+                                            src={sandwichPanelPageInfo.subOption[subOption].content.imageUrl3}
+                                            alt="sandwich sub image1"/>
+                                    </Box>
+                                </Box>
+                            </motion.div>
                             {/*</AnimatePresence>*/}
                         </Box>
                         <Box className={`${classes.subMenuContainer} toMd`}>
@@ -678,62 +722,50 @@ const SandwichRenderer = ({history}) => {
 
                         <Box display='flex' mt={'5rem'} className={classes.calcContainer}>
                             <Box display='flex' alignItems='center' justifyContent='center'>
-                                {/*<AnimatePresence>*/}
-                                    <motion.div className={classes.calcsection}
-                                                variants={variants}
-                                                initial="hidden"
-                                                animate="visible"
-                                                key={uuid()}
+                                <div className={classes.calcsection}
+                                            // variants={variants}
+                                            // initial="hidden"
+                                            // animate="visible"
+                                            // transition={{duration: .5}}
+                                            // key={uuid()}
+                                >
+                                    <motion.img
+                                        variants={variants}
+                                        initial="hidden"
+                                        animate="visible"
+                                        transition={{duration: .5}}
+                                        key={uuid()}
+                                        style={{height: '400px', width: '600px'}}
+                                        src={sandwichPanelPageInfo.calcRoof[subRoof].imageUrl}
+                                        alt="sandwich sub image1"/>
+                                    {subRoof === 0 &&
+                                    <div
                                     >
-                                        <img
-                                            // initial={{opacity: 0}}
-                                            // animate={{opacity: 1}}
-                                            // exit={{opacity: 0}}
-                                            // key={uuid()}
-                                            style={{height: '400px', width: '600px'}}
-                                            src={sandwichPanelPageInfo.calcRoof[subRoof].imageUrl}
-                                            alt="sandwich sub image1"/>
-                                        {/*subRoof*/}
-                                        {subRoof === 0 &&
-                                        <div
-                                            // initial={{opacity: 0}}
-                                            // animate={{opacity: 1}}
-                                            // exit={{opacity: 0}}
-                                            // key={uuid()}
-                                        >
-                                            <input type="number" id='inlength1'/>
-                                            <input type="number" id='inheight1'/>
-                                            <input type="number" id='inheightk1'/>
-                                            <input type="number" id='inwidth1'/>
-                                        </div>
-                                        }
-                                        {subRoof === 1 &&
-                                        <div
-                                            // initial={{opacity: 0}}
-                                            // animate={{opacity: 1}}
-                                            // exit={{opacity: 0}}
-                                            // key={uuid()}
-                                        >
-                                            <input type="number" id='inlength2'/>
-                                            <input type="number" id='inheight2'/>
-                                            <input type="number" id='inheightk2'/>
-                                            <input type="numbers" id='inwidth2'/>
-                                        </div>
-                                        }
-                                        {subRoof === 2 &&
-                                        <div
-                                            // initial={{opacity: 0}}
-                                            //         animate={{opacity: 1}}
-                                            //         exit={{opacity: 0}}
-                                            //         key={uuid()}
-                                        >
-                                            <input type="number" id='inlength3'/>
-                                            <input type="number" id='inheight3'/>
-                                            <input type="numbers" id='inwidth3'/>
-                                        </div>
-                                        }
-                                    </motion.div>
-                                {/*</AnimatePresence>*/}
+                                        <input type="number" id='inlength1' name='inlength1' onChange={inputHandler}/>
+                                        <input type="number" id='inheight1' name='inheight1' onChange={inputHandler}/>
+                                        <input type="number" id='inheightk1' name='inheightk1' onChange={inputHandler}/>
+                                        <input type="number" id='inwidth1' name='inwidth1' onChange={inputHandler}/>
+                                    </div>
+                                    }
+                                    {subRoof === 1 &&
+                                    <div
+                                    >
+
+                                        <input type="number" id='inlength2' name='inlength2' onChange={inputHandler}/>
+                                        <input type="number" id='inheight2' name='inheight2' onChange={inputHandler}/>
+                                        <input type="number" id='inheightk2' name='inheightk2' onChange={inputHandler}/>
+                                        <input type="number" id='inwidth2' name='inwidth2' onChange={inputHandler}/>
+                                    </div>
+                                    }
+                                    {subRoof === 2 &&
+                                    <div
+                                    >
+                                        <input type="number" id='inlength3' name='inlength3' onChange={inputHandler}/>
+                                        <input type="number" id='inheight3' name='inheight3' onChange={inputHandler}/>
+                                        <input type="number" id='inwidth3' name='inwidth3' onChange={inputHandler}/>
+                                    </div>
+                                    }
+                                </div>
                             </Box>
                             <Box
                                 display='flex'
@@ -766,6 +798,7 @@ const SandwichRenderer = ({history}) => {
                                                             variants={variants}
                                                             initial="hidden"
                                                             animate="visible"
+                                                            transition={{duration: .5}}
                                                             key={uuid()}
                                                         >
                                                             <p>{sandwichPanelPageInfo.calcRoof[subRoof].header}</p>
@@ -773,9 +806,9 @@ const SandwichRenderer = ({history}) => {
                                                     )
                                                     : ''
                                             }
-                                            <h3>Площадь кровли: 77.03 м2</h3>
-                                            <h3>Площадь стен: 90.00 м2</h3>
-                                            <h2>Итого: 167.03 м2</h2>
+                                            <h3>Площадь кровли: {Number(crowl).toFixed(2)} м2</h3>
+                                            <h3>Площадь стен: {Number(area).toFixed(2)} м2</h3>
+                                            <h2>Итого: {(Number(Number(crowl).toFixed(2)) + Number(Number(area).toFixed(2)))} м2</h2>
                                         </Box>
                                     </Box>
                                 </Card>

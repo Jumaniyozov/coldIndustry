@@ -169,6 +169,12 @@ const useStyles = makeStyles({
 const CoolingEnginePage = () => {
     const classes = useStyles();
     const {coolingEnginePageInfo, fetchCEPage} = useContext(GlobalContext);
+    let menuContainer = {};
+    if (coolingEnginePageInfo.length > 1) {
+        menuContainer = coolingEnginePageInfo.mainSection;
+    }
+
+    console.log(menuContainer);
 
     useEffect(() => {
 

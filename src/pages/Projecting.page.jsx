@@ -11,7 +11,7 @@ const useStyles = makeStyles({
 
         '&.list': {
             "& p": {
-                lineHeight: "3.5rem",
+                lineHeight: "2.5rem",
             }
         },
 
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
         },
         "& h1, & .header1": {
             fontWeight: "bold",
-            fontSize: "2rem",
+            fontSize: "1.25rem",
             lineHeight: "3.5rem",
             color: '#FFF'
         },
@@ -186,60 +186,52 @@ const useStyles = makeStyles({
     },
 });
 
-const AboutPageRenderer = () => {
+const ProjectingPageRenderer = () => {
     const classes = useStyles();
 
-    const {aboutPageInfo, fetchAboutPage} = useContext(GlobalContext);
+    const {projectingPageInfo, fetchProjectingPage} = useContext(GlobalContext);
 
     useEffect(() => {
-        fetchAboutPage();
-    }, [aboutPageInfo])
+        fetchProjectingPage();
+    }, [projectingPageInfo])
+
 
     return (
         <>
             {
-                aboutPageInfo.length < 1
+                projectingPageInfo.length < 1
                     ? <h1>Loading...</h1>
                     : (<>
                             <Box bgcolor="#1F1F23" pt='8rem' pl={'3rem'} pr={'3rem'} className={classes.root}>
-                                <Box bgcolor='#FFF'>
-                                    <SliderCardMain data={aboutPageInfo.mainSection.content}/>
-                                </Box>
-                                <Box className={classes.heroSection} mt={'2rem'}>
-                                    <p>
-                                        <span className={`header1`}>
-                                            {aboutPageInfo.mainSection.header1}
-                                        </span>
-                                        {aboutPageInfo.mainSection.text1}
-                                    </p>
+                                    <Box bgcolor='#FFF'>
+                                        <SliderCardMain data={projectingPageInfo.mainSection.content}/>
+                                    </Box>
+                                <Box className={classes.heroSection}>
+                                    <h1>
+                                        {projectingPageInfo.mainSection.text1}
+                                    </h1>
                                     <Box mt={'3rem'} className={'secondaryText'}>
-                                        <p style={{fontStyle: 'italic'}}>{aboutPageInfo.mainSection.text2}</p>
+                                        <p style={{fontStyle: 'italic'}}>{projectingPageInfo.mainSection.text2}</p>
                                     </Box>
                                 </Box>
                                 <Box className={`${classes.heroSection} list`} mt={'3rem'}>
                                     <h2>
-                                        {aboutPageInfo.mainSection.header2}
+                                        {projectingPageInfo.mainSection.header2}
                                     </h2>
-                                    {aboutPageInfo.mainSection.text3.map(text => <p>{text}</p>)}
+                                    {projectingPageInfo.mainSection.text2.map(text => <p>{text}</p>)}
+                                </Box>
+                                <Box className={`${classes.heroSection} list`} mt={'3rem'}>
+                                    <h2>
+                                        {projectingPageInfo.mainSection.header3}
+                                    </h2>
+                                    {projectingPageInfo.mainSection.text3.map(text => <p>{text}</p>)}
                                 </Box>
                                 <Box pt='3rem'>
                                     <Box width='80%' className={`${classes.heroSection} list2`}>
                                         <h1>
-                                            {aboutPageInfo.secondSection.header}
+                                            {projectingPageInfo.lastSection.header}
                                         </h1>
-                                        {aboutPageInfo.secondSection.text.map(text => <p>{text}</p>)}
-                                    </Box>
-                                </Box>
-                                <Box pt='3rem'>
-                                    <Box className={`${classes.heroSection} list2`}>
-                                        <Box width='80%'>
-                                            <h1>
-                                                {aboutPageInfo.lastSection.header}
-                                            </h1>
-                                        </Box>
-                                        <Box width='90%'>
-                                            {aboutPageInfo.lastSection.text.map(text => <p>{text}</p>)}
-                                        </Box>
+                                        {projectingPageInfo.lastSection.text.map(text => <p>{text}</p>)}
                                     </Box>
                                 </Box>
                             </Box>
@@ -249,4 +241,4 @@ const AboutPageRenderer = () => {
     );
 };
 
-export default AboutPageRenderer;
+export default ProjectingPageRenderer;
